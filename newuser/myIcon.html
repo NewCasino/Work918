@@ -1,0 +1,319 @@
+<!--头像-->
+
+<link rel="stylesheet" type="text/css" href="./newuser/photoJS/bootstrap.css">
+<link href="./newuser/photoJS/cropper.min.css" rel="stylesheet">
+<link href="./newuser/photoJS/sitelogo.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="./newuser/photoJS/font-awesome.min.css">
+<script src="./newuser/photoJS/bootstrap.min.js"></script>
+<script src="./newuser/photoJS/cropper.js"></script>
+<script src="./newuser/photoJS/sitelogo.js"></script>
+<script src="./newuser/photoJS/html2canvas.min.js" type="text/javascript" charset="utf-8"></script>
+<div id="myIcon">
+    <section class="img_wrap margin_b25">
+        <div class="div9">
+            <span>头像</span>
+            <p>审核中</p><!--orange_color 加上class 文字变成橙色-->
+            <div id="carme_phto">
+                <img src="./newuser/img/defalut_heard.png">
+            </div>
+        </div>
+        <a class="div8">
+            <span class="span1">用户名</span>
+            <span class="span2">武陵人捕鱼为业</span>
+        </a>
+    </section>
+    <!--会员积分-->
+    <section class="jifen_wrap">
+        <a class="div7" href="#type=url&p=newuser/jfmx.html">
+            <span class="span1">会员积分</span>
+            <span class="span2">0</span>
+        </a>
+    </section>
+    <!--切换账号-->
+    <section>
+        <a href="javascript:;" class="btn_a1">切换账号</a>
+    </section>
+</div>
+<div id="myIconright" style="display: none;">
+    <section class="edit_wrap">
+        <div class="avatar-preview preview-lg" id="imageHead" style="width: 182px; height: 182px;">
+
+        </div>
+        <img src="img/person.jpg" class="person_img">
+        <a href="javascript:;" class="btn_a">确认修改</a>
+        <p class="p5">温馨提示：头像十五天仅能更换一次，请慎重操作</p>
+    </section>
+</div>
+<div>
+    <button type="button" class="btn btn-primary" style="display:none;" data-toggle="modal" data-target="#avatar-modal" style="margin: 10px;">修改头像</button>
+    <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="avatar-form">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal" type="button">×</button>
+                        <h4 class="modal-title" id="avatar-modal-label">上传图片</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="avatar-body">
+                            <div class="avatar-upload">
+                                <input class="avatar-src" name="avatar_src" type="hidden">
+                                <input class="avatar-data" name="avatar_data" type="hidden">
+                                <label for="avatarInput" style="line-height: 35px;">图片上传</label>
+                                <button class="btn btn-danger" type="button" style="height: 35px;" onclick="$(&#39;input[id=avatarInput]&#39;).click();">请选择图片</button>
+                                <span id="avatar-name">1.jpg</span>
+                                <input class="avatar-input hide" id="avatarInput" name="avatar_file" type="file">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="avatar-wrapper"><img src="" class="cropper-hidden">
+                                    <div class="cropper-container cropper-bg" style="width: 538px; height: 364px;">
+                                    <div class="cropper-wrap-box"><div class="cropper-canvas" style="width: 273.728px; height: 364px; left: 132.136px; top: 0px;">
+                                    <img src="" style="width: 273.728px; height: 364px; margin-left: 0px; margin-top: 0px; transform: none;">
+                                    </div>
+                                    </div>
+                                    <div class="cropper-drag-box cropper-modal cropper-crop"></div>
+                                    <div class="cropper-crop-box" style="width: 199.953px; height: 199.953px; left: 178.538px; top: 60.6158px;">
+                                    <span class="cropper-view-box">
+                                    <img src="" style="width: 273.728px; height: 364px; margin-left: -46.4018px; margin-top: -60.6158px; transform: none;"></span>
+                                    <span class="cropper-dashed dashed-h"></span>
+                                    <span class="cropper-dashed dashed-v"></span><span class="cropper-center"></span>
+                                    <span class="cropper-face cropper-move"></span>
+                                    <span class="cropper-line line-e" data-action="e"></span>
+                                    <span class="cropper-line line-n" data-action="n"></span>
+                                    <span class="cropper-line line-w" data-action="w"></span>
+                                    <span class="cropper-line line-s" data-action="s"></span>
+                                    <span class="cropper-point point-e" data-action="e"></span>
+                                    <span class="cropper-point point-n" data-action="n"></span>
+                                    <span class="cropper-point point-w" data-action="w"></span>
+                                    <span class="cropper-point point-s" data-action="s"></span>
+                                    <span class="cropper-point point-ne" data-action="ne"></span>
+                                    <span class="cropper-point point-nw" data-action="nw"></span>
+                                    <span class="cropper-point point-sw" data-action="sw"></span>
+                                    <span class="cropper-point point-se" data-action="se"></span>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="avatar-preview preview-lg" id="imageHead" style="width: 182px; height: 182px;">
+                                    <img src="" style="display: block; width: 249.151px; height: 331.317px; min-width: 0px !important; min-height: 0px !important; max-width: none !important; max-height: none !important; margin-left: -42.2355px; margin-top: -55.1732px; transform: none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row avatar-btns">
+                            <div class="col-md-3">
+                                    <button class="btn btn-danger btn-block avatar-save fa fa-save" type="button" data-dismiss="modal"> 保存修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    CP.myHeadPortrait=(function(){
+        var personHeadPhto={};
+        var getData=function(){
+            $.ajax({
+                url : '/user/personal_center_info.go',
+                type : "POST",
+                data:{uid:localStorage.getItem('username')},
+                dataType : "xml",
+                success : function(xml) {
+                    var R = $(xml).find('Resp');
+                    var code = R.attr('code');
+                    var desc = R.attr('desc') || '';
+                    personHeadPhto={
+                        'status':R.find('row').attr('status'),
+                        'ipoint':R.find('row').attr('ipoint'),
+                        'userphoto':R.find('row').attr('userphoto'),
+                        'flag':R.find('row').attr('flag'),
+                        'desc':R.find('row').attr('desc')
+                    }
+                    console.log(personHeadPhto)
+                    if (code==0) {
+                       switch(personHeadPhto.status){
+                            case 0:
+                                $(".div9 p").html('审核中');
+                            break;
+                            case 1:
+                                $(".div9 p").html();                             
+                            break;
+                            case 2:
+                                //可点击 上传
+                                $(".div9 p").html('未通过审核');
+                                $(".div9 p").addClass('.orange_color')
+                            break;
+                            case 3:
+                                $(".div9 p").html('审核不通过，已提示用户');
+                            break;
+                       }
+                       $(".carme_phto img").attr('src',personHeadPhto.userphoto);
+                       $(".div8 .span2").html(localStorage.getItem('username'));
+                       $(".div7 .span2").html(personHeadPhto.ipoint);
+                    }else if(code==1){
+                        //未登录状态
+                        alert('请先登录');
+                        location.href = '#type=fun&fun=CP.Home.openLogin&in=newuser/myIcon.html';
+                    }
+                    
+                }
+            });
+        }
+        var Action=function(){
+            var ToggleBody=function(){
+                if($("#myIcon").css('display')=='none'){
+                    $("#myIcon").css('display','block')
+                    $("#myIconright").css('display','none')
+                    TopAnch.init(
+                        {title:'我的头像',
+                            prevShow:true,
+                            prevFun:'',
+                            isBack:true
+                        }
+                    )
+                }else{
+                    $("#myIcon").css('display','none')
+                    $("#myIconright").css('display','block')
+                    TopAnch.init(
+                        {title:'头像修改',
+                            prevShow:true,
+                            prevFun:function(){
+                                $("#myIcon").css('display','block')
+                                $("#myIconright").css('display','none')
+                                TopAnch.init(
+                                    {title:'我的头像',
+                                        prevShow:true,
+                                        prevFun:'',
+                                        isBack:true
+                                    }
+                                )
+                            },
+                            isBack:true
+                        }
+                    )
+                }
+            }
+            $('.btn_a1').Touch(function () {//退出登录
+                $.ajax({
+                    url : CP.Data.apps+'/user/loginout.go',
+                    type : "POST",
+                    dataType : "xml",
+                    success : function(xml) {
+                        var R = $(xml).find("Resp");
+                        var code = R.attr("code");
+                        var desc = R.attr("desc");
+                        if (code == "0") {
+                            alert('退出成功');
+                            setTimeout(function () {
+                                location.href = '#type=fun&fun=CP.Home.openLogin&in=user/index.html';
+                            }, 1500);
+                        }else{
+                            alert(desc);
+                        }
+                    }
+                });
+            });
+            $(".div9 img").Touch(function(e){
+                if(personHeadPhto.flag==-1){
+                    //msg, fn, tag ,tt
+                    //弹框样式修改
+                    $(".pdTop03").addClass('alert_msg_p');
+                    D.alert(personHeadPhto.desc,function(){
+                        $(".pdTop03").removeClass('alert_msg_p');
+                    },'','温馨提示')
+                }else{
+                     $(".pdTop03").addClass('alert_msg_p');
+                    D.alert('1.头像图片中不得带有广告、色情、暴力、赌博等性质的logo或者水印<br/>2.头像照片十五个工作日内仅能更换一次',function(){
+                        $(".pdTop03").removeClass('alert_msg_p');
+                        // $("#carme_phto").append('<input id="file" type="file" style="opacity: 0;" accept="image/*" />');
+                        $(".btn-primary").click();
+                        document.querySelector('#file').addEventListener('change', function () {
+                            ToggleBody()
+                            
+                            lrz(this.files[0],{width: 1024})
+                                .then(function (rst) {
+                                    var getsrc = rst.base64; 
+                                    $(".person_img").attr('src',getsrc);
+                                    // rst.formData.append('img0',rst.file);
+                                    // rst.formData.append('fileLen', rst.fileLen)
+                                    // $.ajax({
+                                    //     url: '/user/upload_user_photo.go',
+                                    //     data:rst.formData, 
+                                    //     processData: false,
+                                    //     contentType: false,
+                                    //     type: 'POST',
+                                    //     beforeSend: function(){
+                                    //         console.log('------rst.formData-----');
+                                    //         console.log(rst.formDatarst.formData)
+                                    //         console.log('-------beforeSend--------')
+                                    //     // Handle the beforeSend event
+                                    //     },
+                                    //     success: function (data) {
+                                    //         console.log(rst.formData)
+                                            
+                                    //     }
+                                    // });
+                                    // return rst;
+                               }).catch(function (err) {
+                                    // 处理失败会执行
+                                })
+                                .always(function () {
+                                    //alert('成功咯')
+                                    // 不管是成功失败，都会执行
+                                });
+                        });
+                        $('#file').trigger("click");
+                        
+                    },'','温馨提示')
+
+                }
+                
+            })
+            $(".btn_a").Touch(function(){
+                var oMyForm = new FormData();
+                var file=$("#file").prop('files')
+                oMyForm.append("img0", "Groucho")
+                oMyForm.append('img0',file[0]);
+                $.ajax({
+                    url: '/user/upload_user_photo.go',
+                    data:oMyForm, 
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    beforeSend: function(){ 
+                        console.log(oMyForm)
+                        // alert(oMyForm)
+                    },
+                    success: function (data) {
+                        var R = $(data).find("Resp");
+                        var c = R.attr('code');
+                        var desc = R.attr('desc');
+                        alert(desc)
+                        if(c==0){
+                            ToggleBody()
+                        }
+                        
+                    },error:function (XMLHttpRequest,textStatus,errorThrown) {
+                        // console.log(XMLHttpRequest.status);
+                        if(XMLHttpRequest.status==413){
+                            alert('图片过大,请修改后重新上传')
+                        }
+                    } 
+                });
+            })
+        }()
+        return {Init:getData,Action:Action};
+    })()
+    TopAnch.init(
+        {title:'我的头像',
+            prevShow:true,
+            prevFun:'',
+            isBack:true
+        }
+    )
+    CP.myHeadPortrait.Init();
+</script>
