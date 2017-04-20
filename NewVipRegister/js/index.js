@@ -303,11 +303,12 @@ Action.CheckValue=function(){
 					   				} catch(_) {
 					   				    alert("本地储存写入错误，若为safari浏览器请关闭隐身模式浏览。");
 					   				}
-					   			
+					   				$("#cellphone,#Usermsg").val('')
 					   				window.location.href="./register_success.html";
 							   }else{
 								   alert(desc);
 								   clearInterval(timer);
+								   $("#Usermsg").val('')
 									setTimeout(function(){
 										$('.code_a').html('获取验证码')
 									},500)

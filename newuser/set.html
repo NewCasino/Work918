@@ -20,9 +20,9 @@
 		<a href="tel:4006739188" class="relative" id='phonenum'>客服电话 400-673-9188<i
 			class="hmArrow"></i></a>
 	</div>
-	<div class="pd063">
+	<!-- <div class="pd063">
 		<a href="javascript:;" id=getOut class="payment">退出登录</a>
-	</div>
+	</div> -->
 </div>
 <script>
 String.prototype.getParam = function(n){
@@ -79,12 +79,13 @@ CP.SetUp = (function(){
 			},
 			operation : function () {
 				TopAnch.init({
-					title:'设置',
+					title:'账户安全',
 					prevShow:true,
 					prevFun:function(){//左侧按钮绑定事件
 						window.location.href='#type=url&p=newuser/index.html';
 					},
-					isBack:true
+					isBack:true,
+					style:'newuser'
 				});
 				o.safe();
 			},

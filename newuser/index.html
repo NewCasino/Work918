@@ -1,3 +1,5 @@
+
+    
     <section class="margin_b25">
         <div class="header_box clearfix">
             <div class="header_img"><img src="./newuser/img/defalut_heard.png"></div>
@@ -13,8 +15,8 @@
                 <a id="Acoutn_detail">查看账户明细</a>
             </div>
             <div class="div2 clearfix">
-                <p class="p3"><a href="#">充值</a></p>
-                <p class="p4"><a href="#">提款</a></p>
+                <p class="p3" id="cz"><a href="javascript:;">充值</a></p>
+                <p class="p4"  id="withdrawal"><a href="javascript:;">提款</a></p>
             </div>
         </div>
     </section>
@@ -44,7 +46,7 @@
     </section>
     <!--我的红包-->
     <section class="myhb_wrap">
-        <a class="div4">
+        <a class="div4" href="#type=url&p=newuser/redpack.html">
             <span class="span1">我的红包</span>
             <span class="span2">0</span>
         </a>
@@ -129,11 +131,13 @@
                         prevFun:function(){//左侧按钮绑定事件
                             window.location.href = '#type=index';
                         },
-                        style:false
+                        isBack:true,
+                        style:'newuser'
                     });
                 }()
             }
             var Action={
+                //点击眼睛
                 ClickEyes:function(){
                     $(".div1").click(function(e){
                         e.stopPropagation();
@@ -146,11 +150,12 @@
                         }else{
                             //瞎子
                             getThis.find('span').addClass('span_eye')
-                            getThis.find('span').html('****')
+                            getThis.find('span').html('*****')
                             localStorage.setItem("UserNickHide",true)
                         }
                     })
                 }(),
+                //点击头像
                 ClickUserPhoto:function(){
                     $(".header_img,.header_info").click(function(e){
                         e.stopPropagation();
@@ -166,9 +171,156 @@
                             location.hash = 'type=url&p=newuser/detail.html'
                         }
                     })
-                }()
+                }(),
+                //判断是否绑定银行卡
+                checkBankCard:function(u){
+                    $.ajax({
+                        url : '/user/query.go?flag=4',
+                        type : "POST",
+                        dataType : "xml",
+                        success : function(xml) {
+                            var R = $(xml).find("Resp");
+                            var code = R.attr("code");
+                            var desc = R.attr("desc");
+                            if (code == "0") {
+                                var r= R.find("row");
+                                var rname = r.attr("rname");
+                                var idcard = r.attr("idcard");
+                                var card = r.attr("card");//卡号
+                                if(card == ""){//未绑定银行卡
+                                    Action.setPassword(u)
+                                }else {
+                                    window.location.href=u;//"/#type=url&p=user/charge.html"
+                                }
+                            }else{
+                                alert(desc);
+                                if(desc.indexOf('未登录')>=0){
+                                    setTimeout(function () {
+                                        window.location.href = '/alone/login.html';
+                                    }, 1500);
+                                }
+                            }
+                        }
+                    });
+                },
+                //判断是否实名验证
+                checkId:function(u,obj){
+                    $.ajax({
+                        url : '/user/query.go?flag=2',
+                        type : "POST",
+                        dataType : "xml",
+                        success : function(xml) {
+                            var R = $(xml).find("Resp");
+                            var code = R.attr("code");
+                            var desc = R.attr("desc");
+                            if (code == "0") {
+                                var r= R.find("row");
+                                var rname = r.attr("rname");
+                                var idcard = r.attr("idcard");
+                                var bank = r.attr("bank");
+                                
+                                if(obj=="cz"){
+                                    if(rname == ""){//未实名
+                                        D.confirm_new("为保证您的账户安全，请先绑定身份信息",function(){
+                                            window.location.href="/alone/idcard.html";
+                                        },"确定")
+                                    }else {
+                                        window.location.href=u;//"/#type=url&p=user/charge.html"
+                                    }
+                                }else{
+                                    if(rname == ""){//未实名
+                                        D.confirm_new("为保证您的账户安全，请先绑定身份信息",function(){
+                                            window.location.href="/alone/idcard.html";
+                                        },"确定")
+                                    }else if(!bank){
+                                        /***
+                                        D.confirm_new("为保证您的账户安全，请先绑定银行卡",function(){
+                                            console.log("aaa")
+                                            window.location.href="/alone/bankcard.html";
+                                        },"确定")
+                                        ***/
+                                        $("#iosDialog1").show();
+                                        $("#descript").html("为保证您的账户安全，请先绑定银行卡")
+                                        
+                                        $('#qx').click(function(){//取消
+                                            $('#iosDialog1').hide();
+                                        });
+                                        $('#qr').click(function(){//确定
+                                            $('#iosDialog1').hide();
+                                            window.location.href="/alone/bankcard.html";
+                                        });
+                                    }else {
+                                        window.location.href=u;//"/#type=url&p=user/charge.html"
+                                    }
+                                }
+                                
+                            }else{
+                                alert(desc);
+                                if(desc.indexOf('未登录')>=0){
+                                    setTimeout(function () {
+                                        window.location.href = '/alone/login.html';
+                                    }, 1500);
+                                }
+                            }
+                        }
+                    });
+                },
+                //设置密码
+                setPassword:function(u,obj){
+                    var data = "uid="+encodeURIComponent($.trim(perdata.nickid))
+                    $.ajax({
+                        url:'/user/query_zcsh_pwd_flag.go',
+                        type:"POST",
+                        dataType:"XML",
+                        data:data,
+                        success:function (data){
+                            var R = $(data).find("Resp");
+                            var c = R.attr('code');
+                            var desc = R.attr('desc')||"";
+                            if(c == '0'){//去设置密码(没有设置密码)
+                                var r = R.find("row");
+                                var pwdflag=r.attr("pwdflag");
+                                
+                                if(pwdflag=="0"){
+                                    D.confirm_new("为保证您的账户安全，请先设置购彩密码",function(){
+                                        window.location.href="/alone/spwd.html";
+                                    },"确定")
+                                }else{//如不需要设置密码则在判断是否实名认证
+                                    Action.checkId(u,obj);//window.location.href="#type=url&p=user/index.html";
+                                }
+                            }else{
+                                alert(desc)
+                            }
+                        }
+                    })
+                }
             }
-            return  {init:GetInfm.data,Action:Action}
+            var bind = function () {
+                $('#cz').click(function(e){//充值
+                    e.stopPropagation();
+                    var id = $(this).attr("id")
+                    if(CP.Data.source == '3021'){//咸鱼彩票
+                        Action.checkId("#type=url&p=newuser/charge.html",id)
+                    }else{
+                        Action.setPassword("#type=url&p=newuser/charge.html",id);
+                    }
+                    
+                });
+                
+                ///alone/drawing.html
+                $('#withdrawal').click(function(e){//提款
+                    e.stopPropagation();
+
+                    var id = $(this).attr("id")
+                    if(CP.Data.source == '3021'){
+                        Action.checkId("/alone/drawing.html",id)
+                    }else{
+                        Action.checkBankCard("/alone/drawing.html",id);
+                    }
+                    
+                });
+            }()
+            return  {init:GetInfm.data,Action:Action,bind:bind}
             
         })()
         function resetPage(){
@@ -179,7 +331,8 @@
                 prevFun:function(){//左侧按钮绑定事件
                     window.location.href = '#type=index';
                 },
-                style:false
+                isBack:true,
+                style:'newuser'
             });
             $('#mylottery').show();
             $('#myrebate').hide();

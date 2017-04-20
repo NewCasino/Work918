@@ -1,22 +1,33 @@
 <article class="gcjlTit" id=myRecord>
-	<section class="iscroll_wrap ">
-		<ul class=" " id='gcjl' >
-	    	<li data-navstatus="qbdd" class="on">全部</li>
+	<!-- <section class="iscroll_wrap find_nav_list">
+		<ul class="" id='gcjl' >
+	    	<li data-navstatus="qbdd" class="on find_nav_cur">全部</li>
 	        <li data-navstatus="dkj">待开奖</li>
 	    	<li data-navstatus="ykj">已开奖</li>
 	        <li data-navstatus="zj">中奖</li>
 	        <li data-navstatus="zh">追号</li>
 	        <li data-navstatus="hm">合买</li>
+	        <li class="sideline"></li>
 	        <div class="clear"></div>
 	    </ul>
-	</section>    
-   <!--  <ul class="myAccount" id=zhjl style='display:none;'>
-    	<li class="on" style='width:33%'>全部</li>
-        <li style='width:33%'>进行中</li>
-        <li style='width:33%'>已经停止</li>
-        <div class="clear"></div>
-    </ul> -->
-    <div id="wrapper" style="margin-top: 2.4rem;">
+	</section>    --> 
+	<section class="find_nav">
+	    <div class="find_nav_left">
+	        <div class="find_nav_list">
+	            <ul id="gcjl">
+	                <li data-navstatus="qbdd" class="find_nav_cur">全部</li>
+			        <li data-navstatus="dkj">待开奖</li>
+			    	<li data-navstatus="ykj">已开奖</li>
+			        <li data-navstatus="zj">中奖</li>
+			        <li data-navstatus="zh">追号</li>
+			        <li data-navstatus="hm">合买</li>
+			        <li class="sideline"></li>
+	            </ul>
+	        </div>
+	    </div>
+	</section>
+ 
+    <div id="wrapper" style="margin-top: 2.65rem;">
 		<div id="scroller">
              <div class="" id="list_record">
              	<div style='padding:58px;height:1000px'>
@@ -34,7 +45,7 @@
 CP.MyRecord = (function () {
 	var tag = CP.Util.getPara('in', window.location.href, 2);
 	var on_ = CP.Util.getPara('on', window.location.href, 2);//获取url上面的参数on_
-	console.log(on_)
+	// console.log(on_)
 	on_ = on_ || 'qbcz';//默认不传打开全部彩种
 	tag=tag||'qbdd'
 	var myScroll;
@@ -114,6 +125,7 @@ CP.MyRecord = (function () {
 						},
 						nextShow:false,
 						isBack:true,
+						style:'newuser',
 						headerSelect:[{name:'全部彩种',fun:o.changePlayType,cur:g.type[on_][1]},
 									  {name:'双色球'},
 									  {name:'大乐透'},
@@ -179,6 +191,7 @@ CP.MyRecord = (function () {
 				var opt_ = opt || {};
 				var out_ = [];
 				out_.push($('#list_record').html());
+				console.log(tag)
 				for (var Q1 in opt_) {
 					var Q = opt_[Q1];
 					if (tag != 'zh') {//渲染购彩记录
@@ -205,18 +218,6 @@ CP.MyRecord = (function () {
 						            </div>\
 						        </div>\
 						    </a>')
-
-							// out_.push('<a href="#type=url&p=user/viewpath.html?hid='+Q.projid+'">\
-							// 			<div class="myCz">\
-							// 				<p><em class="fontSize092">'+CP.Util.lot(Q.gid)+'</em><em class="accountLine"></em><em class="fontSize07">'+g.arrTy[Q.ty]+'</em></p>\
-							// 				<cite>'+Q.money+'元</cite>\
-							// 			</div>\
-							// 			<div class="myQs">\
-							// 				<p>第'+Q.pid+'期&nbsp;&nbsp;'+o.DateDiff(Q.buydate).day+'</p>\
-							// 				<cite>'+Q2+'</cite>\
-							// 			</div>\
-							// 			<i class="hmArrow"></i>\
-							// 		</a>');
 						
 					} else{//追号记录
 						if(Q.bonus>0){
@@ -241,7 +242,6 @@ CP.MyRecord = (function () {
 						        </div>\
 						    </a>')
 						}	
-						console.log(11)
 				}
 				$('#list_record').html(out_.join(''));
 				if(g.cPage<g.total){
@@ -281,19 +281,6 @@ CP.MyRecord = (function () {
 							// source:CP.Data.source
 						};
 					}
-					/***
-					var data = {//查询全部
-							mtype:"H5",
-							appversion:"",
-							source"3015",
-							logintype:"0",
-							imei:"",
-							signmsg:"",
-							gid:"",
-							pn:"1",
-							ps:"10"
-					};
-					***/
 					switch(n){
 						case 0:
 							//全部
@@ -335,21 +322,6 @@ CP.MyRecord = (function () {
 						break;
 
 					}
-					// if (tag == 'gc'){
-					// 	if (n == '1') {//中奖
-					// 		data.aid = 0;
-					// 	}else if(n == '2') {//未中奖
-					// 		data.rid = 0;
-					// 	} else if(n == '3') {//合买
-					// 		data.newValue = 'HM';
-					// 	}
-					// } else if (tag == 'zh') {
-					// 	if (n == '1') {//进行中
-					// 		data.qtype = 0;
-					// 	} else if (n == '2') {//已经停止
-					// 		data.qtype = 1;
-					// 	}
-					// }
 					
 					/*]]post参数*/
 					$.ajax({
@@ -371,8 +343,8 @@ CP.MyRecord = (function () {
 								r.each(function () {
 									var t = {};
 									t.gid = $(this).attr('gid');
-									console.log('tag'+tag);
-									console.log('n'+n);
+									// console.log('tag'+tag);
+									// console.log('n'+n);
 
 									if (tag != 'zh'&&n!=4) {
 										// t.rec = $(this).attr('rec');
@@ -409,7 +381,7 @@ CP.MyRecord = (function () {
 									}
 									recordData.push(t);
 								});
-								console.log(recordData)
+								// console.log(recordData)
 								o.render(recordData);
 							} else {
 								if(d.indexOf('未登录') != -1){
@@ -425,32 +397,108 @@ CP.MyRecord = (function () {
 					});
 				}
 			},
+			NavClick:function(){
+				//导航条滑动
+				$(function(){
+				    $(".find_nav_list").css("left",sessionStorage.left+"px");
+				    $(".find_nav_list li").each(function(){
+				        if($(this).text()==sessionStorage.pagecount){
+				            $(".sideline").css({left:$(this).position().left});
+				            $(".sideline").css({width:$(this).outerWidth()});
+				            $(this).addClass("find_nav_cur").siblings().removeClass("find_nav_cur");
+				            navName(sessionStorage.pagecount);
+				            return false
+				        }
+				        else{
+				            $(".sideline").css({left:0});
+				            $(".find_nav_list li").eq(0).addClass("find_nav_cur").siblings().removeClass("find_nav_cur");
+				        }
+				    });
+				    var nav_w=$(".find_nav_list li").first().width();
+				    $(".sideline").width(nav_w);
+				    $(".find_nav_list li").on('click', function(){
+				        nav_w=$(this).width();
+				        $(".sideline").stop(true);
+				        $(".sideline").animate({left:$(this).position().left},300);
+				        $(".sideline").animate({width:nav_w});
+				        $(this).addClass("find_nav_cur").siblings().removeClass("find_nav_cur");
+				        var fn_w = ($(".find_nav").width() - nav_w) / 2;
+				        var fnl_l;
+				        var fnl_x = parseInt($(this).position().left);
+				        if (fnl_x <= fn_w) {
+				            fnl_l = 0;
+				        } else if (fn_w - fnl_x <= flb_w - fl_w) {
+				            fnl_l = flb_w - fl_w;
+				        } else {
+				            fnl_l = fn_w - fnl_x;
+				        }
+				        $(".find_nav_list").animate({
+				            "left" : fnl_l
+				        }, 300);
+				        sessionStorage.left=fnl_l;
+				        var c_nav=$(this).text();
+				        navName(c_nav);
+				    });
+				    var fl_w=$(".find_nav_list").width();
+				    var flb_w=$(".find_nav_left").width();
+				    $(".find_nav_list").on('touchstart', function (e) {
+				        var touch1 = e.originalEvent.targetTouches[0];
+				        x1 = touch1.pageX;
+				        y1 = touch1.pageY;
+				        ty_left = parseInt($(this).css("left"));
+				    });
+				    $(".find_nav_list").on('touchmove', function (e) {
+				        var touch2 = e.originalEvent.targetTouches[0];
+				        var x2 = touch2.pageX;
+				        var y2 = touch2.pageY;
+				        if(ty_left + x2 - x1>=0){
+				            $(this).css("left", 0);
+				        }else if(ty_left + x2 - x1<=flb_w-fl_w){
+				            $(this).css("left", flb_w-fl_w);
+				        }else{
+				            $(this).css("left", ty_left + x2 - x1);
+				        }
+				        if(Math.abs(y2-y1)>0){
+				            e.preventDefault();
+				        }
+				    });
+				});
+				function navName(c_nav) {
+				    switch (c_nav) {
+				        case "全部":
+				            sessionStorage.pagecount = "全部";
+				            break;
+				        case "待开奖":
+				            sessionStorage.pagecount = "待开奖";
+				            break;
+				        case "已开奖":
+				            sessionStorage.pagecount = "已开奖";
+				            break;
+				        case "中奖":
+				            sessionStorage.pagecount = "中奖";
+				            break;
+				        case "追号":
+				            sessionStorage.pagecount = "追号";
+				            break;
+				        case "合买":
+				            sessionStorage.pagecount = "合买";
+				            break;
+				       
+				    }
+				}
+			},
 			init : function () {
-				// document.getElementById(g.title[tag][1]).style.display = 'block';
 				o.bind();
+				o.NavClick()
 				o.change(g.navstatus[tag][1]);//初始化加载的时候显示第一个
 				
-				console.log(g.navstatus[tag][1])
-				$("#gcjl li").eq(g.navstatus[tag][1]).addClass('on').siblings().removeClass('on');
-				// $("#gcjl li").eq(g.navstatus[tag][1]).trigger('touchend')
-				/*追号&购彩记录的外层样式不一样[[*/
-				// if (tag == 'gc') {
-				// 	$('#myRecord').attr('class','gcjlTit');
-				// 	$('#list_record').removeClass('myRecord2');
-				// } else {
-				// 	$('#myRecord').attr('class','zhjlTit');
-				// 	$('#list_record').addClass('myRecord2');
-				// }
-				/*]]追号&购彩记录的外层样式不一样*/
+				$(".find_nav_list li").eq(g.navstatus[tag][1]).trigger('click');
 				o.layOut();
 			},
 			bind : function () {
-				$('#gcjl, #zhjl').Touch({children:'li', fun:function (el) {
-					if ($(el).is('.on')) {
-						return
-					}
-					$(el).addClass('on').siblings().removeClass('on');
-
+				$('#gcjl').Touch({children:'li', fun:function (el) {
+					// $(el).addClass('on').siblings().removeClass('on');
+					// console.log($(el).index())
 					window.location.href = '#type=url&p=newuser/record.html?on='+on_+'&in='+$(el).attr('data-navstatus');
 
 					$('#list_record').html('<div style="padding:58px;height:1000px"><em class="rotate_load" style="margin:auto"></em></div>');
@@ -503,6 +551,7 @@ CP.MyRecord = (function () {
 			}
 	};
 	var init = function () {
+		delete resetPage //删除订单详情中的全局变量
 		o.pageGo.goBack();
 		o.init();
 	};
