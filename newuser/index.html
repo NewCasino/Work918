@@ -2,10 +2,14 @@
     
     <section class="margin_b25">
         <div class="header_box clearfix">
-            <div class="header_img"><img src="./newuser/img/defalut_heard.png"></div>
+            <div class="header_img">
+                <a href="#type=url&p=newuser/myIcon.html" >
+                    <img src="./newuser/img/defalut_heard.png">
+                </a>
+            </div>
             <div class="header_info">
                 <p class="p1"></p>
-                <p class="p2">会员积分:</p>
+                <p class="p2">会员积分：</p>
             </div>
         </div>
         <!---->
@@ -88,7 +92,7 @@
                             if (code==0) {
                                 //获取用的基本信息
                                 $(".header_info .p1").html(perdata.nickid);
-                                $(".header_info .p2").html("会员积分:"+perdata.point);
+                                $(".header_info .p2").html("会员积分："+perdata.point);
                                 localStorage.setItem("username",perdata.nickid)
                                 //校验睁眼闭眼状态
                                 if(JSON.parse(localStorage.getItem("UserNickHide"))){
@@ -108,12 +112,12 @@
                                     $(".myicon_1").html("<span>待开奖</span><em>99+</em>")
                                 }
                                 //红包
-                                $(".div4 span2").html(perdata.redpacketmoney)
+                                $(".div4 .span2").html(perdata.redpacketmoney)
                                 //校验身份证是否安全
-                                if(perdata.mobile!=''&&perdata.idcard!=''&&perdata.realname!=''){
+                                if(perdata.mobbind=='1'&&perdata.idcard!=''&&perdata.realname!=''){
                                     $(".div5 .span2").html('安全')
                                 }else{
-                                    $(".div5 .span2").html('请完善信息')
+                                    $(".div5 .span2").addClass("unsafe").html('请完善信息')
                                 }
                             }else if(code==1){
                                 //未登录状态
@@ -139,32 +143,33 @@
             var Action={
                 //点击眼睛
                 ClickEyes:function(){
-                    $(".div1").click(function(e){
+                    $(".div1 span").click(function(e){
                         e.stopPropagation();
                         var getThis=$(this);
-                        if($(this).find('span').hasClass('span_eye')){
+                        if($(this).hasClass('span_eye')){
                             //开睁
-                           getThis.find('span').removeClass('span_eye')
-                           getThis.find('span').html(perdata.usermoney)
+                           getThis.removeClass('span_eye')
+                           getThis.html(perdata.usermoney)
                            localStorage.setItem("UserNickHide",false)
                         }else{
                             //瞎子
-                            getThis.find('span').addClass('span_eye')
-                            getThis.find('span').html('*****')
+                            getThis.addClass('span_eye')
+                            getThis.html('*****')
                             localStorage.setItem("UserNickHide",true)
                         }
                     })
                 }(),
                 //点击头像
-                ClickUserPhoto:function(){
-                    $(".header_img,.header_info").click(function(e){
-                        e.stopPropagation();
-                        location.href='#type=url&p=newuser/myIcon.html'
-                    })
+                // ClickUserPhoto:function(){
+                //     $(".header_img,.header_info").click(function(e){
+                //         e.stopPropagation();
+                //         location.href=''
+                //     })
                     
-                }(),
+                // }(),
                 AcountDetail:function(){
-                    $('#Acoutn_detail').on('touchend', function(){
+                    $('#Acoutn_detail').on('touchend', function(e){
+                         e.stopPropagation();
                         if(CP.Data.source == '3021' && false){//关闭彩金换宝币
                             location.href = '/user/bd/?type=2'
                         }else{

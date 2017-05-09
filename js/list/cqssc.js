@@ -768,7 +768,7 @@ CP.SSC = (function (){
 		});
 		$('#tbox_qishu').KeyBoard({
 			val : zuiqishuNum,
-			max : 155,
+			max : 100,
 			min : 1,
 			num : 1,
 			tag : '期',

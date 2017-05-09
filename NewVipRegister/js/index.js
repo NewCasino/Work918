@@ -44,70 +44,90 @@ var time=60;
 var toggle=true;
 var timer;
 Action.ClickCode_a=function(){
-	
+	$('.pop_btn a').bind('click', function(){
+		$('.Mask').hide();
+		$('.pop').hide();
+		
+	})
 	$('.code_a').click(function(e){
 		e.stopPropagation();
-		var getPhoneNumber=$.trim($("#cellphone").val().replace(/['\t]/g,'').replace(/\s*/g, ''));
-		if(Action.isPhoneOk(getPhoneNumber)){
-			if($(this).html()=='获取验证码'&&toggle){
-				toggle=false;
-				//获取验证码
-				var getDate=new Date().getTime();
-				var getSignmsg=md5('imNo='+getPhoneNumber+'&timestamp='+getDate+'&key='+'1.0^adhfjkas565a4sdf36a4s6df46^');
-				//console.log(getSignmsg)
-				var data={
-					'mobileNo':getPhoneNumber,
-					'imNo':getPhoneNumber,
-					'newValue':0,
-					'flag':2,
-					'stime':getDate,
-					'signmsg':getSignmsg
-				}
-				$.ajax({
-		     	 type: 'POST',
-		         data:data,
-		         url: '/user/sendSms.go',
-		         success:function (data){                 
-		        	var R = $(data).find("Resp");
-		   			var code = R.attr("code");
-		   			var desc = R.attr("desc");
-		   			   if (code == "0"){
-		   			   		toggle=false;
-		   					alert(desc);
-		   					// $('.icon_4').show(500)
-		   					 timer=setInterval(function(){
-								if(time!=0){
-									$('.code_a').html(time+"'")
-									time--;
-								}else{
-									$('.code_a').html(time+"'")
-									clearInterval(timer);
-									setTimeout(function(){
-										$('.code_a').html('获取验证码')
-									},500)
-									toggle=true;
-									time=60;
-								}
-							},1000)
-					   }else{
-
-					   		toggle=true;
-							alert(desc);
-					   }
-		          },
-		          error:function(){
-		          		toggle=true;
-		        	  alert('网络异常');
-		          }
-		     	});
-				
-			}else{
-				alert('短信正在路上，请稍后重试')
-			}
-		}else{
-			alert('请输入正确的手机号')
-		}
+		Action.seccode(true)
 	})
+	$('#yym').click(function(e){
+		e.stopPropagation();
+		Action.seccode(false);
+	})
+}
+Action.seccode = function(bool){ //获取验证码
+	var getPhoneNumber=$.trim($("#cellphone").val().replace(/['\t]/g,'').replace(/\s*/g, ''));
+	if(Action.isPhoneOk(getPhoneNumber)){
+		if(toggle){
+			toggle=false;
+			//获取验证码
+			var getDate=new Date().getTime();
+			var getSignmsg=md5('imNo='+getPhoneNumber+'&timestamp='+getDate+'&key='+'1.0^adhfjkas565a4sdf36a4s6df46^');
+			//console.log(getSignmsg)
+			var data={
+				'mobileNo':getPhoneNumber,
+				'imNo':getPhoneNumber,
+				'newValue':0,
+				'flag':2,
+				'signtype': bool?'':'voice',
+				'stime':getDate,
+				'signmsg':getSignmsg
+			}
+			$.ajax({
+	     	 type: 'POST',
+	         data:data,
+	         url: '/user/sendSms.go',
+	         success:function (data){                 
+	        	var R = $(data).find("Resp");
+	   			var code = R.attr("code");
+	   			var desc = R.attr("desc");
+	   			   if (code == "0"){
+	   			   		toggle=false;
+	   					if(!bool){
+	   						$('.Mask').show();
+	   						$('.pop').show();
+	   						$('#yym').addClass('yym')
+	   					}
+	   					$('#yym').css({'color':'#999'})
+	   					// $('.icon_4').show(500)
+	   					 timer=setInterval(function(){
+							if(time!=0){
+								$('.code_a').html(time+"'")
+								time--;
+							}else{
+								$('.code_a').html(time+"'")
+								clearInterval(timer);
+								setTimeout(function(){
+									$('.code_a').html('获取验证码')
+								},500)
+								toggle=true;
+								time=60;
+								if($('#yym').hasClass('yym')){
+									$('#yym').removeClass('yym')
+								}
+								$('#yym').css({'color':'#00b4ff'})
+							}
+						},1000)
+				   }else{
+				   		toggle=true;
+						alert(desc);
+				   }
+	          },
+	          error:function(){
+	          		toggle=true;
+	        	  alert('网络异常');
+	          }
+	     	});
+			
+		}else{
+			alert('短信正在路上，请稍后重试')
+		}
+	}else{
+		alert('请输入正确的手机号')
+	}
 }
 Action.share=function() {
 	$.ajax({
@@ -279,7 +299,7 @@ Action.CheckValue=function(){
    			var desc = R.attr("desc");
    			   if (code == "0"){
    					var url = "/user/mregister.go";
-   					var comeFrom=Action.GetQueryString('comeFrom')||'';
+   					var comeFrom=Action.GetQueryString('comeFrom')||Action.GetQueryString('comefrom');
 					var data = 'uid='
 					+ encodeURIComponent($.trim(iName))
 					+'&comeFrom='
@@ -303,12 +323,12 @@ Action.CheckValue=function(){
 					   				} catch(_) {
 					   				    alert("本地储存写入错误，若为safari浏览器请关闭隐身模式浏览。");
 					   				}
-					   				$("#cellphone,#Usermsg").val('')
+					   				$("#cellphone,#Usermsg").val('');
 					   				window.location.href="./register_success.html";
 							   }else{
 								   alert(desc);
+								   $("#Usermsg").val('');
 								   clearInterval(timer);
-								   $("#Usermsg").val('')
 									setTimeout(function(){
 										$('.code_a').html('获取验证码')
 									},500)

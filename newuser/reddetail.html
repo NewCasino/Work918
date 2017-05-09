@@ -1,35 +1,13 @@
 <link rel="stylesheet" href="/newuser/css/redpack.css"/>
 <style>
+/*避免出现样式未加载 而html已经加载的情况 */
+/*固定头部*/
+.iscroll_wrap{ position: fixed;top:3.2rem;left:0; height:2.2rem;width:100%; background-color: #fff; z-index: 10;}
+.iscroll_wrap ul{width:100%; height:2.2rem;}
+.iscroll_wrap li{height:2rem; line-height: 2.2rem;float:left;width:33.33%; text-align: center;color:#191919;font-size:0.95rem;}
+.iscroll_wrap li span{display: inline-block;padding:0 0.5rem;}
 </style>
-<!--可用-->
-<!-- <section class="mingxi_wrap" >
-    <p class="p6">边看边猜288元红包</p>
-    <div class="clearfix">
-        <p class="p7">有效期至2017-02-24 23:59</p>
-        <p class="p8">余额：2元</p>
-    </div>
-</section> -->
-<!--列表-->
 <section id='redPackDeital'>
-    <!--消费记录 为空-->
-    <div class="empty_box" style="display: none;">
-        <img src="./newuser/img/empty_img.png">
-        <p>暂无消费记录</p>
-    </div>
-    <!--消费记录列表-->
-    <div class="margin_t25 jilu_list" style="display: block;">
-        <!--1-->
-        <a href="#" class="jilu_a">
-            <div class="clearfix div5">
-                <p class="p9">竞足(混投) | 自购</p>
-                <p class="p11">-3</p>
-            </div>
-            <div class="clearfix div6">
-                <p class="p10">2017-02-24 09:45:47</p>
-                <p class="p12">余额：4</p>
-            </div>
-        </a>
-    </div>
 </section>
 <script>
 CP.newRedPackDetail = (function(){
@@ -58,7 +36,7 @@ CP.newRedPackDetail = (function(){
 					if(row.length > 0){
 						o.dataAnalysis(row)
 					}else{
-						o.noData(index) // 不存在数据时
+						o.noData() // 不存在数据时
 					}
 					/* } */
 				},error : function (){
@@ -92,11 +70,11 @@ CP.newRedPackDetail = (function(){
 			return
 		},
 		noData: function(){
-			var html = '<div class="empty_box" style="display: none;">'
+			var html = '<div class="empty_box">'
 	        html += '<img src="./newuser/img/empty_img.png">'
 	        html += '<p>暂无消费记录</p>'
         	html += '</div>'
-			DOM.deitallist.html(html);
+			DOM.redPackDeital.html(html);
 			return
 		},
 		bind:function(){
@@ -115,7 +93,7 @@ CP.newRedPackDetail = (function(){
 				/* window.location.href = '#type=url&p=user/detail.html?in=cz'; */
 			},
 			isBack:true,
-			/* style:true */
+			 style:'newuser' 
 		});
 		o.init()
 		o.bind();

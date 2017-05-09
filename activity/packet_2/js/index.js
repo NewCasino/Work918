@@ -159,44 +159,50 @@ define(function (){
 			this.value = this.value.replace(/\D/g, " ").replace(/(\d{3})(\d{4})(\d{4})/,'$1 $2 $3');
 			//alert(1)
 		});
-		
 		//第一步
+		var toggle=true;
 		$("#firstNext").bind("click",function(){
-			var phone = $("#cellphone").val();
-			var len = phone.length;
-			phone=phone.replace(/['\t]/g,'').replace(/\s*/g, '');
-			
-			if(len>15){
-				alert("手机号长度不能超过15位");
-				return;
-			}
-			
-			if(!(isPhoneOk($.trim(phone)))){
-		    	 alert('对不起，请输入正确的手机号码');
-		    	 return;
-		     }
-			var data={
-					"id":id,
-					"mobileno":phone
-			}
-			$.ajax({
-				url:"/activity/activityMobileCheck.go",//检测手机号
-				datatype:"XML",
-				data:data,
-				success:function(xml){
-					var R = $(xml).find("Resp");
-					var code = R.attr("code");
-					var desc = R.attr("desc");
-					if(code==0){//符合条件
-						g.phone = $.trim(phone);
-						sendYZM($.trim(phone))
-					}else if(code=="-1"){
-						alert(desc)
-					}else{
-						D.confirm(desc)
-					}
+			if(toggle){
+				var phone = $("#cellphone").val();
+				var len = phone.length;
+				phone=phone.replace(/['\t]/g,'').replace(/\s*/g, '');
+				
+				if(len>15){
+					alert("手机号长度不能超过15位");
+					return;
 				}
-			})
+				
+				if(!(isPhoneOk($.trim(phone)))){
+			    	 alert('对不起，请输入正确的手机号码');
+			    	 return;
+			     }
+				var data={
+						"id":id,
+						"mobileno":phone
+				}
+				toggle=false;
+				$.ajax({
+					url:"/activity/activityMobileCheck.go",//检测手机号
+					datatype:"XML",
+					data:data,
+					success:function(xml){
+						var R = $(xml).find("Resp");
+						var code = R.attr("code");
+						var desc = R.attr("desc");
+						if(code==0){//符合条件
+							g.phone = $.trim(phone);
+							sendYZM($.trim(phone))
+						}else if(code=="-1"){
+							alert(desc)
+						}else{
+							D.confirm(desc)
+						}
+						toggle=true;
+					},error:function(){
+						toggle=true;
+					}
+				})
+			}
 		});
 		
 		//重新获取验证码
@@ -275,6 +281,18 @@ define(function (){
 				alert("请设置您的密码")
 				return;
 			}
+			var source = "3002"
+				console.log(comeFrom)
+			if(comeFrom == "qzkj"){
+				source = "3047"
+			}else if(comeFrom == "qzkj1"){
+				source = "3048"
+			}else if(comeFrom == "qzkj2"){
+				source = "3049"
+			}else if(comeFrom == "kuwo2017"){
+				source = "3046"
+			}
+			
 			var data={
 					"newValue":"2",//1=微信方式 2=普通h5方式
 					"code":"",//微信授权后获得的code   当flag=1是，传此参数
@@ -282,7 +300,7 @@ define(function (){
 					"secret":"", //微信授权使用  当flag=1是，传此参数
 					"aid":id, //参与的活动id
 					"pwd":pwd,//用户密码
-					"source":"3002",//用户来源
+					"source":source,//用户来源
 					"mobileNo":g.phone,//手机号码
 					"imei":"",//手机IMEI码
 					"logintype":"0",//0=session登录  1=token登录
@@ -369,8 +387,7 @@ define(function (){
 		$("input").val("");
 		if(timeout){
 			clearTimeout(timeout);
-		}
-		
+		}	
 		render();
 		bindEvent();
 	};

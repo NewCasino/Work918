@@ -266,15 +266,22 @@ CP.Util = {
 BigMoney.Gotobuy=function(){
    $("#BuyGoly").click(function(e){
         e.stopPropagation();
+        
+        var getHost=window.location.origin;
         try
             {
                BigMoney.AppJiek.GotoBuyssq();
+               ClickCont('大奖墙投注')
             }
         catch(err)
-            {
-                var getHost=window.location.origin;
-               window.location.href=getHost+'/#type=url&p=list/ssq.html'
+            { 	
+                window.location=getHost+'/#type=url&p=list/ssq.html';
+                sessionStorage.setItem('Reload',true)
             }
+        if(navigator.userAgent.indexOf('UCBrowser') > -1) {
+        	window.location=getHost+'/#type=url&p=list/ssq.html';
+//            alert(windows.location)
+        }
         
     })
 }
@@ -309,7 +316,7 @@ BigMoney.share=function() {
             });
             wx.ready(function() {
                 var title = '大奖荣誉墙'; // 分享标题
-                var desc = '历史神单大奖巡礼，速速前来膜拜'; // 分享描述
+                var desc = '历史大奖巡礼，速速前来膜拜'; // 分享描述
                 var link = location.href; // 分享链接
                 var imgUrl = 'http://5.9188.com/NewVipRegister/img/sharelogo.png'; // 分享图标
                 var dataUrl = location.href;// 如果type是music或video，则要提供数据链接，默认为空
@@ -423,19 +430,20 @@ BigMoney.init=function(){
     }
     var b={
        init:function(){
-            a.setJx();//双色球机选
-            s.SaveData();
+    	   a.setJx();//双色球机选
+           s.SaveData();
             $('#rollNew').on('click',function(){//机选一注
                 a.setJx();
                 s.SaveData();
             });
        }()
     }
-    return b.init;
+    return {init:b.init};
 }    
 BigMoney.getContent=function(){
     $.ajax({
         url : "/data/app/HistoryAwardXml/HistoryAward.xml",  
+//    	 url : "./HistoryAward.xml",  
         type:'GET',
         dataType:'xml',
         success:function(xml){
@@ -468,8 +476,12 @@ BigMoney.getContent=function(){
         }
     })
 }
-$(document).ready(function(){
-    BigMoney.init();
+$(function(){
+	if(JSON.parse(sessionStorage.getItem('Reload'))==true){
+		top.window.location.reload();
+		sessionStorage.setItem('Reload',false);
+	}
+	BigMoney.init();
     BigMoney.Gotobuy();
     BigMoney.getContent();
     BigMoney.share();

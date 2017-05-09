@@ -100,7 +100,7 @@ var browser={
                                 CP.AppJiek.appLogin();
                             }
                         },error : function () {
-                            alert('网络异常请刷新重试');
+                            // alert('网络异常请刷新重试');
                         }
                     })
                 }
@@ -127,7 +127,7 @@ var browser={
                     }
                 },error : function () {
                     //remove_alert();
-                    alert('网络异常请刷新重试');
+                    // alert('网络异常请刷新重试');
                 }
             })
         }
@@ -137,7 +137,7 @@ var browser={
         var box=document.getElementById("iscroll"),can=true;
         var h=box.clientHeight;
         
-        // box.innerHTML+=box.innerHTML;
+        box.innerHTML+=box.innerHTML;
         box.onmouseover=function(){can=false};
         box.onmouseout=function(){can=true};
         new function (){
@@ -185,7 +185,7 @@ var browser={
                 if(c == '0'){
                     var list = '';
                     $(getList).each(function(i){
-                        list+='<p>用户：'+$(this).attr('nickid')+'领取了88元礼包</p>';
+                        list+='<p>用户：'+$(this).attr('cnickid')+'领取了88元礼包</p>';
                     })
 
                     $("#iscroll div").html(list);
@@ -195,9 +195,9 @@ var browser={
                 }else{
                   
                 }
-            },error : function () {
+            },error:function () {
                 //remove_alert();
-                alert('网络异常请刷新重试');
+                alert('获取已领信息异常请刷新重试');
             }
         })
     }

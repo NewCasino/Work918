@@ -167,7 +167,8 @@ CP.MyRecord = (function () {
 				var getMonth=+getDate.split('-')[1];
 				var getNowDate=+getDate.split('-')[2];
 				var data={};
-				data.date=date.split(' ')[1];
+				//时间显示到分
+				data.date=date.split(' ')[1].split(":")[0]+':'+date.split(' ')[1].split(":")[1];
 				if(LocaYear==getYear&&LocaMonth==getMonth){
 					
 					if(LocaDate-1==getNowDate){
@@ -214,7 +215,7 @@ CP.MyRecord = (function () {
 						            </div>\
 						            <div class="div12">\
 						                <p class="p8">'+Q.money+'元'+Q2+'</p>\
-						                <p class="p9">'+CP.Util.lot(Q.gid)+'|<em class="fontSize07">'+g.arrTy[Q.ty]+'</em></p>\
+						                <p class="p9">'+CP.Util.lot(Q.gid)+' | <em class="fontSize07">'+g.arrTy[Q.ty]+'</em></p>\
 						            </div>\
 						        </div>\
 						    </a>')
@@ -390,9 +391,21 @@ CP.MyRecord = (function () {
 										location.href = '#type=fun&fun=CP.Home.openLogin';
 									}, 1e3);
 								}else{
-									$('#list_record').html('<div style="padding:58px;height:1000px;text-align:center">'+d+'</div>');
+
 								}
 							}
+							if(c==1000||c==2000||d==''){
+								//防止无数据时出现滚动条
+								myScroll.refresh();
+								$('#list_record').html(
+									'<div class="record_nodata">'+
+										'<img  src="./newuser/img/shikuang.png"/>'+
+										"<p>"+"客官，暂无数据呦~"+"</p>"+
+									'</div>'
+								);
+							}
+							
+									
 						}
 					});
 				}
@@ -541,6 +554,9 @@ CP.MyRecord = (function () {
 							}
 						},
 						onScrollEnd: function () {
+							// console.log("g.index"+g.index)
+							// console.log("g.cPage"+g.cPage)
+
 							if (pullUpEl.className.match('flip')) {
 								pullUpEl.className = 'loading';
 								pullUpEl.querySelector('.pullUpLabel').innerHTML = '正在加载';				

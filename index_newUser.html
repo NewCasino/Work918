@@ -258,10 +258,12 @@ body>a {
     display: none;
 }
 </style>
-<script src="https://s11.cnzz.com/z_stat.php?id=1261284071&web_id=1261284071" language="JavaScript"></script>
-<!-- <script src="https://s11.cnzz.com/z_stat.php?id=1261284071&web_id=1261284071" language="JavaScript"></script> -->
+<script src="https://s11.cnzz.com/z_stat.php?id=1261284071&web_id=1261284071 " language="JavaScript"></script>
 <link rel="stylesheet" href="style/weui.css"/>
 <link rel="stylesheet" href="style/example.css"/>
+<!-- 新我的彩票样式 -->
+<link rel="stylesheet" href="./newuser/css/style.css">
+
 <body class='home' oncontextmenu=self.event.returnValue=false onselectstart="return false">
 <!-- 页头的导航[[ -->
 <header class="tzHeader" id="box_header">
@@ -295,7 +297,7 @@ body>a {
 		<div class="hd"><ul></ul></div>
 	</div>
     <section class="float index_nav_">
-		<a href="#type=url&p=user/index.html"><em class="myIco"></em><h3>我的彩票</h3></a>
+		<a href="#type=url&p=newuser/index.html"><em class="myIco"></em><h3>我的彩票</h3></a>
 		<!-- <a href="#type=url&p=user/hallhm.html"><em class="hmIco"></em><h3>合买中心</h3></a> -->
 		<a onClick="ClickCont('天天推球导航')"><em class="tttq"></em><h3>天天推球</h3></a>
 		<a href="#type=url&p=kj/index.html"><em class="kjIco"></em><h3>开奖结果</h3></a>
@@ -618,17 +620,23 @@ document.getElementById('say_hi').innerHTML = Hours;
 	'kj/result.html':3,
 	//'yuce/index.html':1,
 	//'yuce/forecast.html':5,
-	'user/hallhm.html':3,
-	'user/success.html':3,
-	'user/index.html':7,
-	'user/viewpath.html':3,
-	'user/chase.html':3,
-	'user/detail.html':5,
-	'user/notice.html':3,
-	'user/record.html':3,
-	'user/packet.html':3,
-	'user/charge.html':12,
-	'user/set.html':3,
+	'newuser/hallhm.html':3,
+	'newuser/success.html':3,
+	'newuser/index.html':7,
+	'newuser/viewpath.html':3,
+	'newuser/chase.html':3,
+	'newuser/detail.html':5,
+	'newuser/notice.html':3,
+	'newuser/record.html':3,
+	'newuser/packet.html':3,
+	'newuser/myIcon.html':3,
+	'newuser/record.html':3,
+	'newuser/set.html':3,
+	'newuser/redpack.html':8,
+	'newuser/reddetail.html':3,
+	'newuser/redpackec.html':4,
+	'newuser/charge.html':9,
+	'newuser/set.html':3,
 	'info':23
 };
 
@@ -661,6 +669,7 @@ else{
 <!-- <script src="/js/public/zepto.min.js"></script> -->
 <!-- <script src="/js/public/weui.min.js"></script> -->
 <script type="text/javascript" src="/js/index.js"></script>
+<!--图片上传  -->
 <script type='text/javascript'>
 /* 友盟统计  */
 var ClickCont = function(a){
@@ -677,9 +686,6 @@ var ClickCont = function(a){
 
 var homeFun;
 $(function(){
-	try{
-		_czc.push(['_trackEvent','H5首页' ,'H5', '链接',1,'点击次数'])
-	}catch(e){}	
 	//百分百中奖活动弹窗 -已下线
 	if(!localStorage.getItem('banner') && location.href == 'http://5.9188.com /#type=index'){
 		localStorage.setItem('banner','yes');

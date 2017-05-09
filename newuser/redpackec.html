@@ -6,7 +6,7 @@
         <input type="text" placeholder="请输入兑换码（字母区分大小写）" id='CDkey'>
     </div>
     <div class="duihuan_btn">
-        <a class="btn_a1" id='CDbtn'>立即兑换</a>
+        <a class="btn_a1" id='CDbtn' style='margin:0;'>立即兑换</a>
         <p class="p5">输入兑换码，兑换可抵用购彩现金的红包</p>
     </div>
 
@@ -47,7 +47,16 @@ CP.newRedPackKey = (function(){
 		},
 		bind:function(){
 			DOM.CDbtn.bind('click', function(){
-				o.init();
+				if(DOM.CDkey.val().length > 19){
+					o.init();
+				}
+			})
+			DOM.CDkey.bind('keyup' ,function(){
+				if($(this).val().length > 19){
+					DOM.CDbtn.removeClass('btn_a1').addClass('btn_a2')
+				}else{
+					DOM.CDbtn.removeClass('btn_a2').addClass('btn_a1')
+				}
 			})
 		}	
 	};

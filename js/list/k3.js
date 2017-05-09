@@ -618,7 +618,7 @@ CP.K3 = (function () {
 		});
 		$('#tbox_qishu').KeyBoard({
 			val : zuiqishuNum,
-			max : 155,
+			max : 50,
 			min : 1,
 			num : 1,
 			tag : '期',

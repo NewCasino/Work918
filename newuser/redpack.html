@@ -1,41 +1,21 @@
 <link rel="stylesheet" href="/newuser/css/redpack.css"/>
-<div class="h_fixed1"></div>
+<style>
+/*避免出现样式未加载 而html已经加载的情况 */
+/*固定头部*/
+.iscroll_wrap{ position: fixed;top:3.2rem;left:0; height:2.2rem;width:100%; background-color: #fff; z-index: 10;}
+.iscroll_wrap ul{width:100%; height:2.2rem;}
+.iscroll_wrap li{height:2rem; line-height: 2.2rem;float:left;width:33.33%; text-align: center;color:#191919;font-size:0.95rem;}
+.iscroll_wrap li span{display: inline-block;padding:0 0.5rem;}
+</style>
+<div class="h_fixed"></div>
 <!--红包固定-->
 <section class="iscroll_wrap">
     <ul id='nav'>
-        <li class="on"><span>可用</span></li><li><span>带派发</span></li><li><span>过期/已用</span></li>
+        <li class="on"><span>可用</span></li><li><span>待派发</span></li><li><span>过期/用完</span></li>
     </ul>
 </section>
-
 <!--可用-->
 <section id='sectionRedPack'>
-    <!-- <div class="question_box"><a href="#">红包说明</a></div>
-    可用为空
-    <div class="empty_box" style="display: none;">
-        <img src="./newuser/img/empty_img.png">
-        <p>暂无可用红包</p>
-    </div>
-    可用列表
-    <div style="display: block;">
-        1
-        <a class="clearfix red_box" href="#">
-            <div class="div1"><p class="p1"><span>￥</span><span>8</span></p><p class="p2">余额:4</p></div>
-            <div class="div2"><p class="p3">通用红包(无限制)</p><p class="p4">有效期至2017-02-24</p></div>
-            <div class="label_div">1 天后过期</div>
-        </a>
-        2
-        <a class="clearfix red_box" href="#">
-            <div class="div1"><p class="p1"><span>￥</span><span>8</span></p><p class="p2">余额:4</p></div>
-            <div class="div2"><p class="p3">通用红包(无限制)</p><p class="p4">有效期至2017-02-24</p></div>
-        </a>
-        3
-        <a class="clearfix red_box" href="#">
-            数字居中
-            <div class="div1"><p class="p1 p5"><span>￥</span><span>8</span></p><p class="p2" style="display: none;">余额:4</p></div>
-            <div class="div2"><p class="p3">通用红包(无限制)</p><p class="p4">有效期至2017-02-24</p></div>
-        </a>
-        <div class="div3">以上是所有可用红包</div>
-    </div> -->
 </section>
 <script>
 CP.newRedPack = (function(){
@@ -81,7 +61,7 @@ CP.newRedPack = (function(){
 		},
 		dataAnalysis:function(index,row){
 			var html ='';
-			if(index == 1) html +='<div class="question_box"><a href="#">红包说明</a></div><div>'
+			if(index == 1) html +='<div class="question_box"><a href="http://mobile.9188.com/app/doc/hb_help.html">红包说明</a></div><div>'
 			if(index == 2 || index == 3) html +='<div class="margin_t25" >'
 			row.each(function(a,b){
 				var rpid = $(this).attr('rpid');
@@ -94,29 +74,35 @@ CP.newRedPack = (function(){
 				var rpname = $(this).attr('rpname'); //红包名称
 				var scale = $(this).attr('scale'); //红包使用比例    
 				var state = $(this).attr('state');  //红包状态
-				html += '<a class="clearfix red_box" href="#type=url&p=newuser/reddetail.html?rpid='+rpid+'">'
+				var scaleArr = scale.split('/');
+				if(index == 1 || index == 2){
+					html += '<a class="clearfix red_box" href="#type=url&p=newuser/reddetail.html?rpid='+rpid+'">'
+				}else{
+					html += '<a class="clearfix red_box red_opacity">'
+				}
 				if(index == 1){
-					html += '<div class="div1"><p class="p1"><span>￥</span><span>'+money+'</span></p>'
+					html += '<div class="div1"><p class="p1 p5" style="color: #fff"><span>￥</span><span>'+money+'</span></p>'
 					if(Number(rmoney)) html += '<p class="p2">余额:'+rmoney+'</p>'
 					html += '</div>'
-					html += '<div class="div2"><p class="p3">'+rpname+'</p><p class="p4">有效期至'+deaddate+'</p></div>'
+					html += '<div class="div2"><p class="p3">'+rpname+(scale?("(每满"+scaleArr[1]+"减"+scaleArr[0]+")"):"(无限制)")+'</p><p class="p4">有效期至'+deaddate+'</p></div>'
 					if(residuetime) html += '<div class="label_div">'+residuetime+'天后过期</div>'
-				}else if(index == 2){
-					/* <a class="clearfix red_box" href="#">
-		            <div class="div1"><p class="p1 p5"><span>￥</span><span>8</span></p><p class="p2" style="display: none;">余额:4</p></div>
-		            <div class="div2"><p class="p3">通用红包(无限制)</p><p class="p4">派发日期2017-02-24</p></div>
-		            <div class="opacity_white"></div>透明背景
-		        	</a> */
-					html += '<div class="div1"><p class="p1"><span>￥</span><span>'+money+'</span></p>'
+				}else if(index == 3){/* 带派发 */
+					html += '<div class="div1"><p class="p1 p5" style="color: #fff"><span>￥</span><span>'+money+'</span></p>'
+					if(Number(rmoney)) html += '<p class="p2">余额:'+rmoney+'</p>'
 					html += '</div>'
-					html += '<div class="div2"><p class="p3">'+rpname+'</p><p class="p4">派发日期'+deaddate+'</p></div>'
-					html += '<div class="opacity_white"></div>'
-				}else if(index == 3){
-		            html += '<div class="div4"><p class="p1 p5"><span>￥</span><span>'+money+'</span></p>'
+					html += '<div class="div2"><p class="p3">'+rpname+(scale?("(每满"+scaleArr[1]+"减"+scaleArr[0]+")"):"(无限制)")+'</p><p class="p4">派发日期'+dispatch+'</p></div>'
+					/* html += '<div class="opacity_white"></div>' */
+				}else if(index == 2){/* 已过期 */
+		            html += '<div class="div4"><p class="p1 p5" style="color: #fff"><span>￥</span><span>'+money+'</span></p>'
 	            	if(Number(rmoney)) html += '<p class="p2">余额:'+rmoney+'</p>'
 		            html += '</div>'
-		            html += '<div class="div2"><p class="p3">'+rpname+'</p><p class="p4">有效期至'+deaddate+'</p></div>'
-		            html += '<div class="label_icon label_icon_yongwan"></div>'
+		            html += '<div class="div2"><p class="p3">'+rpname+(scale?("(每满"+scaleArr[1]+"减"+scaleArr[0]+")"):"(无限制)")+'</p><p class="p4">有效期至'+deaddate+'</p></div>'
+		            if(state == '2'){
+		            	html += '<div class="label_icon label_icon_yongwan"></div>'
+		            }else if(state == '3'){
+		            	html += '<div class="label_icon label_icon_guoqi"></div>'
+		            }
+		            
 				}
 				html += '</a>'
 			})
@@ -128,13 +114,18 @@ CP.newRedPack = (function(){
 				return
 		},
 		noData : function(index){
-			var html = '<div class="empty_box">'
+			var html = ''
+			if(index == 1){
+				/* 红包说明  */
+				html += '<div class="question_box"><a href="http://mobile.9188.com/app/doc/hb_help.html">红包说明</a></div>'
+			} 
+			html += '<div class="empty_box">'
 			html += '<img src="./newuser/img/empty_img.png">';
 			if(index == 1){
 				html += '<p>暂无可用红包</p>'
-			}else if(index == 2){
-				html += '<p>暂无待派发红包</p>'
 			}else if(index == 3){
+				html += '<p>暂无待派发红包</p>'
+			}else if(index == 2){
 				html += '<p>暂无失效红包</p>'
 			}
 			html += '</div>'
@@ -145,9 +136,13 @@ CP.newRedPack = (function(){
 			DOM.nav.bind('click' , function(){
 				var self = $(this);
 				var index = Number(self.index());
-				console.log(index)
 				DOM.nav.removeClass('on');
 				self.addClass('on');
+				if(index == 1){
+					index = 2 // 带派发
+				}else if(index == 2){
+					index = 1 // 过期
+				}
 				o.init(index+1);
 			})
 		}	
@@ -160,9 +155,9 @@ CP.newRedPack = (function(){
 				window.history.back();
 			},
 			nextShow: true,
-			nextText: '',
+			nextText: '兑换',
 			nextFun: function(){
-				/* window.location.href = '#type=url&p=user/detail.html?in=cz'; */
+				window.location.href = '#type=url&p=newuser/redpackec.html';
 			},
 			isBack:true,
 			style:'newuser'

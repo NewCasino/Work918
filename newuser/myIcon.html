@@ -1,18 +1,13 @@
 <!--头像-->
 
-<link rel="stylesheet" type="text/css" href="./newuser/photoJS/bootstrap.css">
-<link href="./newuser/photoJS/cropper.min.css" rel="stylesheet">
-<link href="./newuser/photoJS/sitelogo.css" rel="stylesheet">
+
 <!-- <link rel="stylesheet" type="text/css" href="./newuser/photoJS/font-awesome.min.css"> -->
-<script src="./newuser/photoJS/bootstrap.min.js"></script>
-<script src="./newuser/photoJS/cropper.js"></script>
-<script src="./newuser/photoJS/sitelogo.js"></script>
-<script src="./newuser/photoJS/html2canvas.min.js" type="text/javascript" charset="utf-8"></script>
+
 <div id="myIcon">
     <section class="img_wrap margin_b25">
         <div class="div9">
             <span>头像</span>
-            <p>审核中</p><!--orange_color 加上class 文字变成橙色-->
+            <p></p><!--orange_color 加上class 文字变成橙色-->
             <div id="carme_phto">
                 <img src="./newuser/img/defalut_heard.png">
             </div>
@@ -36,7 +31,7 @@
 </div>
 <div id="myIconright" style="display: none;">
     <section class="edit_wrap">
-        <img src="img/person.jpg" class="person_img">
+        <img src="./newuser/img/defalut_heard.png" class="person_img">
         <a href="javascript:;" class="btn_a">确认修改</a>
         <p class="p5">温馨提示：头像十五天仅能更换一次，请慎重操作</p>
     </section>
@@ -64,9 +59,8 @@
                                     <div class="col-md-9">
                                     <div class="avatar-wrapper"><img src="" class="cropper-hidden">
                                     <div class="cropper-container cropper-bg" style="width:100%; height:100%;">
-                                    <div class="cropper-wrap-box"><div class="cropper-canvas" style="width: 273.728px; height: 364px; left: 132.136px; top: 0px;">
-                                        <img src="" style="width: 273.728px; height: 364px; margin-left: 0px; margin-top: 0px; transform: none;">
-                                    </div>
+                                    <div class="cropper-wrap-box">
+                                   
                                     </div>
                                     <div class="cropper-drag-box cropper-modal cropper-crop"></div>
                                     <div class="cropper-crop-box" style="width: 80%; height:60%; left:10%; top: 20%;">
@@ -112,7 +106,20 @@
             </div>
         </div>
 </div>
+<link rel="stylesheet" type="text/css" href="./newuser/photoJS/bootstrap.css">
+<link href="./newuser/photoJS/cropper.min.css" rel="stylesheet">
+<link href="./newuser/photoJS/sitelogo.css" rel="stylesheet">
+<!-- <script src="./newuser/photoJS/bootstrap.min.js"></script>
+<script src="./newuser/photoJS/cropper.js"></script>
+<script src="./newuser/photoJS/sitelogo.js"></script>
+<script src="./newuser/photoJS/html2canvas.min.js" type="text/javascript" charset="utf-8"></script> -->
+
 <script type="text/javascript">
+    //库文件目录
+    var getScript=["./newuser/photoJS/bootstrap.min.js",
+                    "./newuser/photoJS/cropper.js",
+                    "./newuser/photoJS/sitelogo.js",
+                    "./newuser/photoJS/html2canvas.min.js"]
     CP.myHeadPortrait=(function(){
         var personHeadPhto={};
         var getData=function(){
@@ -135,19 +142,23 @@
                     console.log(personHeadPhto)
                     if (code==0) {
                        switch(personHeadPhto.status){
-                            case 0:
+                            case '-1':
+                                $(".div9 p").html('');
+                            break;    
+                            case '0':
                                 $(".div9 p").html('审核中');
                             break;
-                            case 1:
-                                $(".div9 p").html();                             
+                            case '1':
+                                $(".div9 p").html('');                             
                             break;
-                            case 2:
+                            case '2':
                                 //可点击 上传
                                 $(".div9 p").html('未通过审核');
-                                $(".div9 p").addClass('.orange_color')
+                                $(".div9 p").addClass('orange_color')
                             break;
-                            case 3:
-                                $(".div9 p").html('审核不通过，已提示用户');
+                            case '3':
+                                $(".div9 p").html('');
+                                // $(".div9 p").addClass('orange_color')
                             break;
                        }
                        $("#carme_phto img").attr('src',personHeadPhto.userphoto||'./newuser/img/defalut_heard.png');
@@ -163,6 +174,26 @@
                     
                 }
             });
+            //裁剪库文件引入
+            $(getScript).each(function(i,v){
+                jQuery.ajax({
+                    type: 'GET',
+                    dataType: 'text',
+                    cache: true,
+                    url: v,
+                    success: function (html) {
+                        $("#content_home").append("<script  type='text/javascript' charset='utf-8'>"+html+"<\/script>")
+                    },
+                    error: function (e) {
+                        if (e.status == 404) {
+                            window.location.href = '#type=index';
+                            return;
+                        }
+                    }
+                })
+               
+            })
+            
         }
         var Action=function(){
             var ToggleBody=function(){
@@ -170,9 +201,12 @@
                     $("#myIcon").css('display','block')
                     $("#myIconright").css('display','none')
                     TopAnch.init(
-                        {title:'我的头像',
+                        {title:'个人中心',
                             prevShow:true,
-                            prevFun:'',
+                            prevFun:function(){
+                                window.history.back();
+                                $('#dAlert,#mask').hide();
+                            },
                             isBack:true,
                             style:'newuser'
                         }
@@ -187,7 +221,7 @@
                                 $("#myIcon").css('display','block')
                                 $("#myIconright").css('display','none')
                                 TopAnch.init(
-                                    {title:'我的头像',
+                                    {title:'个人中心',
                                         prevShow:true,
                                         prevFun:'',
                                         isBack:true,
@@ -213,6 +247,11 @@
                 }
                 if(!this.files[0].type.match(/image.*/)) {
                     alert('请选择正确的图片!')
+                    //不合规的 删了！
+                    $(".cropper-wrap-box").html('')
+                    $(".cropper-view-box img").attr('src','')
+                    //清除输出图片
+                    $("#imageHead").html('')
                 } else {
                     var filename = document.querySelector("#avatar-name");
                     var texts = document.querySelector("#avatarInput").value;
@@ -224,26 +263,31 @@
             });
 
             $(".avatar-save").on("click", function() {
-                var img_lg = document.getElementById('imageHead');
-                // 截图小的显示框内的内容
-                html2canvas(img_lg, {
-                    allowTaint: true,
-                    taintTest: false,
-                    onrendered: function(canvas) {
-                        canvas.id = "mycanvas";
-                        //生成base64图片数据
-                        var dataUrl = canvas.toDataURL("image/png",0.6);//image/jpeg
-                        var newImg = document.createElement("img");
-                        
-                        newImg.src = dataUrl;
-                        //将截图后生成的图片复制给头像
-                        document.getElementsByClassName('person_img')[0].src=dataUrl
-                        // $(".person_img").attr('src',$("#imageHead img").attr('src'))
-                        ToggleBody();
-                        imagesAjax(dataUrl)
-                        
-                    }
-                });
+                if($("#imageHead img").length==1){
+                    var img_lg = document.getElementById('imageHead');
+                    // 截图小的显示框内的内容
+                    html2canvas(img_lg, {
+                        allowTaint: true,
+                        taintTest: false,
+                        onrendered: function(canvas) {
+                            canvas.id = "mycanvas";
+                            //生成base64图片数据
+                            var dataUrl = canvas.toDataURL("image/png",0.6);//image/jpeg
+                            var newImg = document.createElement("img");
+                            
+                            newImg.src = dataUrl;
+                            //将截图后生成的图片复制给头像
+                            document.getElementsByClassName('person_img')[0].src=dataUrl
+                            // $(".person_img").attr('src',$("#imageHead img").attr('src'))
+                            ToggleBody();
+                            imagesAjax(dataUrl)
+                            
+                        }
+                    });
+                }else{
+                    alert('请选择图片')
+                }
+                
             })
             function dataURItoBlob(base64Data) {
                 var byteString;
@@ -319,39 +363,98 @@
                 });
             });
             $("#carme_phto img").Touch(function(e){
-                if(personHeadPhto.flag==-1){
-                    //msg, fn, tag ,tt
-                    //弹框样式修改
-                    $("#dAlert").addClass("alert_wrap");
-                    $(".tureBtn").addClass('alert_trueBtn');
+                // 关闭拍照上传功能
+                $("#dAlert").addClass("alert_wrap");
+                $(".tureBtn").addClass('alert_trueBtn');
 
-                    $(".pdTop03").addClass('alert_msg_myIcon');
-                    D.alert(personHeadPhto.desc,function(){
-                        $(".pdTop03").removeClass('alert_msg_myIcon');
-                        $("#dAlert").removeClass("alert_wrap");
-                        $(".tureBtn").removeClass('alert_trueBtn');
+                $(".pdTop03").addClass('alert_msg_myIcon');
+                D.alert("请下载彩票客户端以修改您的头像",function(){
+                    $(".pdTop03").removeClass('alert_msg_myIcon');
+                    $("#dAlert").removeClass("alert_wrap");
+                    $(".tureBtn").removeClass('alert_trueBtn');
 
-                    },'知道了','')
-                }else{
-                    //样式修改
-                    $(".pdTop03").addClass('alert_msg_p');
-                    $("#dAlert").addClass("alert_wrap");
-                    $(".tureBtn").addClass('alert_trueBtn');
+                },'知道了','')
+                // if(personHeadPhto.flag==-1){
+                //     //msg, fn, tag ,tt
+                //     //弹框样式修改
+                //     $("#dAlert").addClass("alert_wrap");
+                //     $(".tureBtn").addClass('alert_trueBtn');
 
-                     // $(".tureBtn").attr({"data-target":"#avatar-modal","data-toggle":"modal"})
-                     // ="" data-target="#avatar-modal"
-                    D.alert('1.头像图片中不得带有广告、色情、暴力、赌博等性质的logo或者水印<br/>2.头像照片十五个工作日内仅能更换一次',
-                        function(){
-                            $("#dAlert").removeClass("alert_wrap");
-                            $(".tureBtn").removeClass('alert_trueBtn');
-                            $(".pdTop03").removeClass('alert_msg_p');
-                            // $(".tureBtn").removeAttr("data-target data-toggle")
-                            $("#avatar-modal").modal('show')
-                            //触发拍照和图片选择
-                            $('input[id=avatarInput]').trigger('click');               
-                        },'知道了','')
+                //     $(".pdTop03").addClass('alert_msg_myIcon');
+                //     D.alert(personHeadPhto.desc,function(){
+                //         $(".pdTop03").removeClass('alert_msg_myIcon');
+                //         $("#dAlert").removeClass("alert_wrap");
+                //         $(".tureBtn").removeClass('alert_trueBtn');
 
-                }
+                //     },'知道了','')
+                // }else{
+                    
+                //     //Status2点击知道后状态换为3
+                //     var ChangeStatus=function(imgUrl){
+                //         $.ajax({
+                //             url: '/user/reback_user_photo_status.go',
+                //             data:{userImgPath:imgUrl},
+                //             type : "POST",
+                //             dataType : "xml",
+                //             success : function(xml) {
+                //                 $(".div9 p").html('');
+                //             }
+                //         });
+                //     }
+                //     //样式修改
+                //     var CarmerAction=function(status){
+                //         $("#dAlert").addClass("alert_wrap");
+                //         $(".tureBtn").addClass('alert_trueBtn');
+                //         $(".pdTop03").addClass('alert_msg_p');
+                //         if(status=='1'){
+                            
+                //              // $(".tureBtn").attr({"data-target":"#avatar-modal","data-toggle":"modal"})
+                //              // ="" data-target="#avatar-modal"
+                //             D.alert('1.头像图片中不得带有广告、色情、暴力、赌博等性质的logo或者水印<br/>2.头像照片十五个工作日内仅能更换一次',
+                //                 function(){
+                //                     $("#dAlert").removeClass("alert_wrap");
+                //                     $(".tureBtn").removeClass('alert_trueBtn');
+                //                     $(".pdTop03").removeClass('alert_msg_p');
+                //                     // $(".tureBtn").removeAttr("data-target data-toggle")
+                //                     $("#avatar-modal").modal('show')
+                //                     //触发拍照和图片选择
+                //                     $('input[id=avatarInput]').trigger('click');               
+                //                 },'知道了','')
+                //         }else if(status=='2'){
+                //              // $(".tureBtn").attr({"data-target":"#avatar-modal","data-toggle":"modal"})
+                //              // ="" data-target="#avatar-modal"
+                //             D.alert('未通过审核的原因可能是头像图片中出现了带有广告、色情、暴力、赌博等性质的logo或者水印，请检查后重新上传',
+                //                 function(){
+                //                     $("#dAlert").removeClass("alert_wrap");
+                //                     $(".tureBtn").removeClass('alert_trueBtn');
+                //                     $(".pdTop03").removeClass('alert_msg_p');
+                //                     // $(".tureBtn").removeAttr("data-target data-toggle")
+                //                     ChangeStatus(personHeadPhto.userphoto)
+                //                     $("#avatar-modal").modal('show')
+                //                     //触发拍照和图片选择
+                //                     $('input[id=avatarInput]').trigger('click');               
+                //                 },'知道了','')
+                //         }else if(status=='3'){
+                //             $("#dAlert").removeClass("alert_wrap");
+                //             $(".tureBtn").removeClass('alert_trueBtn');
+                //             $(".pdTop03").removeClass('alert_msg_p');
+
+                //             $("#avatar-modal").modal('show')
+                //             //触发拍照和图片选择
+                //             $('input[id=avatarInput]').trigger('click'); 
+                //         }
+                //     }
+                //     switch(personHeadPhto.status){
+                //         case '2':
+                //             CarmerAction('2')
+                //         break;
+                //         case '3':
+                //             CarmerAction('3')
+                //         break;
+                //         default:
+                //             CarmerAction('1')
+                //     }        
+                // }
                 
             })
             
@@ -359,9 +462,12 @@
         return {Init:getData};
     })()
     TopAnch.init(
-        {title:'我的头像',
+        {title:'个人中心',
             prevShow:true,
-            prevFun:'',
+            prevFun:function(){
+                window.history.back();
+                $('#dAlert,#mask').hide();
+            },
             isBack:true,
             style:'newuser'
         }

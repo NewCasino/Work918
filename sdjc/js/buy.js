@@ -580,9 +580,13 @@ var SD = (function(){
 										
 										html += '<tr>\
 											<td class="width1" rowspan="'+(o.length(obj)+1)+'"><p>'+name.substring(0,2)+'</p><p>'+name.substring(2,name.length)+'</p></td>\
-											<td class="width2"><p class="c_gray">'+hn+rq+' VS '+gn+dan+'</p></td>\
-											<td class="width3">半'+((hhs==""&&hgs=="")?"--":hhs+':'+hgs)+'/全'+((hs==""&&gs=="")?"--":hs+':'+gs)+'</td>\
-											</tr>'
+											<td class="width2"><p class="c_gray">'+hn+rq+' VS '+gn+dan+'</p></td>'
+										if(hhs == '-1' && hgs == '-1' && hs == '-1' && gs == '-1'){
+											html += '<td class="width3">延</td>'
+										}else{
+											html += '<td class="width3">半'+((hhs==""&&hgs=="")?"--":hhs+':'+hgs)+'/全'+((hs==""&&gs=="")?"--":hs+':'+gs)+'</td>'
+										}
+										html += '</tr>'
 										for(var i in obj){
 											var arr=[];
 											
@@ -644,7 +648,7 @@ var SD = (function(){
 									}
 								})
 									html +='<tr><td colspan="3"  class="width4"><p>过关方式：'+gg+'</p>'
-									if((isOwner == 'true' || showCode =='true') && node >= 1 && percent == 100){
+									if((showCode =='true') && node >= 1 && percent == 100){
 										html +='<span class="icon_chup" id="icon_chup">出票明细</span></td></tr>'
 									}else{
 										html +='</td></tr>'
@@ -708,7 +712,9 @@ var SD = (function(){
 					var lose=Number(lose)
 					switch (type) {
 					case 'SPF':
-						if(hs>gs){
+						if(hs == '-1' && gs == '-1' && hhs == '-1' && hgs == '-1'){
+							str=''
+						}else if(hs>gs){
 							str='主胜';
 						}else if(hs==gs){
 							str='平'
@@ -721,7 +727,9 @@ var SD = (function(){
 					case 'RQSPF':
 						if(( hs||hs == 0 ) && (gs || gs == 0 )){
 							if(lose>0){
-								if(hs+lose>gs){
+								if(hs == '-1' && gs == '-1' && hhs == '-1' && hgs == '-1'){
+									str=''
+								}else if(hs+lose>gs){
 									str='让胜'
 								}else if(hs+lose==gs){
 									str='让平'
@@ -732,7 +740,9 @@ var SD = (function(){
 								}
 							}else if(lose<0){
 								lose = Math.abs(lose);
-								if(hs-lose>gs){
+								if(hs == '-1' && gs == '-1' && hhs == '-1' && hgs == '-1'){
+									str=''
+								}if(hs-lose>gs){
 									str='让胜'
 								}else if(hs-lose==gs){
 									str='让平'
@@ -749,7 +759,9 @@ var SD = (function(){
 					//胜胜，胜平，胜负,平胜，平平，平负，负胜，负平，负负
 					case 'BQC':
 						if((hs == 0 || hs) && (gs == 0 || gs)&&(hhs == 0 || hhs) && (hgs == 0 || hgs)){
-							if(hs>gs && hhs>hgs){
+							if(hs == '-1' && gs == '-1' && hhs == '-1' && hgs == '-1'){
+								str=''
+							}else if(hs>gs && hhs>hgs){
 								str='胜胜'
 							}else if(hhs>hgs && hs==gs){
 								str='胜平'
@@ -775,14 +787,18 @@ var SD = (function(){
 						}
 						break;
 					case 'JQS':
-						if((hs == 0 || hs) && (gs == 0 || gs)){
+						if(hs == '-1' && gs == '-1' && hhs == '-1' && hgs == '-1'){
+							str=''
+						}else if((hs == 0 || hs) && (gs == 0 || gs)){
 							str=''+(hs+gs)+''
 						}else{
 							str='--'
 						}
 						break;
 					case 'CBF':
-						if((hs == 0 || hs) && (gs == 0 || gs)){
+						if(hs == '-1' && gs == '-1' && hhs == '-1' && hgs == '-1'){
+							str=''
+						}else if((hs == 0 || hs) && (gs == 0 || gs)){
 							str=''+hs+":"+gs+''
 						}else{
 							str='--'

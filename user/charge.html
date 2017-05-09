@@ -131,11 +131,11 @@ CP.Charge = (function(){
 				} */
 				
 				if(rectype == '21'){ /* 京东支付  */
-					data = {bankid:bankid,addmoney:tempvalue,mtype:"4",webcallbackurl:'http://5.9188.com /user/umpay_h5_callback.go'};
+					data = {bankid:bankid,addmoney:tempvalue,mtype:"4",webcallbackurl:'http://5.9188.com/user/umpay_h5_callback.go'};
 				}else if(rectype == '18'){ /* 现在支付 */
-					data = {bankid:bankid,addmoney:tempvalue,mtype:"4",webcallbackurl:"http://5.9188.com /#type=url&p=user/index.html"};
+					data = {bankid:bankid,addmoney:tempvalue,mtype:"4",webcallbackurl:"http://5.9188.com/#type=url&p=user/index.html"};
 				}else if(rectype == '19' || rectype == '20'){ /* 威富通微信  | 威富通支付宝*/
-					data = {bankid:bankid,addmoney:tempvalue,mtype:"4",webcallbackurl: "http://5.9188.com "};
+					data = {bankid:bankid,addmoney:tempvalue,mtype:"4",webcallbackurl: "http://5.9188.com"};
 				}else if(rectype == '17'){ /* 盛付通支付*/
 					data = {bankid:bankid,addmoney:tempvalue,mtype:"4"};
 				}else{ /* 飞客支付 | 盛付通支付*/

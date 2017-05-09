@@ -57,7 +57,7 @@ header.headerNew h1{font-size: 1rem; font-weight: normal;color:#191919; text-ali
 .h_fixed{height: 2.7rem;width:100%;}
 .h_fixed1{height:2.2rem;width:100%;}
 /*固定头部*/
-.iscroll_wrap{ position: fixed;top:2.7rem;left:0; height:2.2rem;width:100%; background-color: #fff; z-index: 10;}
+.iscroll_wrap{ position: fixed;top:3.2rem;left:0; height:2.2rem;width:100%; background-color: #fff; z-index: 10;}
 .iscroll_wrap ul{width:100%; height:2.2rem;}
 .iscroll_wrap li{height:2rem; line-height: 2.2rem;float:left;width:33.33%; text-align: center;color:#191919;font-size:0.95rem;}
 .iscroll_wrap li span{display: inline-block;padding:0 0.5rem;}
@@ -67,6 +67,7 @@ header.headerNew h1{font-size: 1rem; font-weight: normal;color:#191919; text-ali
 .question_box a{ position: absolute;right:1rem;color: #2395FF; background: url('../img/question_icon.png') 0 center no-repeat;
     background-size:1rem 1rem;padding-left:1.3rem;
 }
+a.red_opacity{opacity:0.5}
 a.red_box{  position:relative;display: block;height:6.8rem;width:100%; background: #fff;overflow: hidden;margin-bottom: 0.9rem;}
 a.red_box .opacity_white{ position:absolute;top:0;left:0;z-index:10;width:100%;height:6.8rem;background: rgba(255,255,255,0.5);}
 a.red_box .div1{position: absolute;width:6rem;height:6.8rem;background: url('../img/keyong_bg.png') 0 0 no-repeat; background-size:7rem 6.8rem;
@@ -76,12 +77,12 @@ a.red_box .div4{position: absolute;width:6rem;height:6.8rem;background: url('../
     color:#fff;margin-right: 1rem; text-align: center;padding-right:1rem;
 }
 a.red_box p.p1{padding:0.9rem 0 0;}
-a.red_box p.p1.p5{padding:1.5rem 0 0;}
+a.red_box p.p1.p5{padding:2.3rem 0 0;}
 a.red_box p.p1 span:first-child{font-size:1.1rem;}
 a.red_box p.p1 span:last-child{font-size:2.8rem;font-weight: bold;}
 a.red_box p.p2{letter-spacing: 1.56px;font-size:0.85rem;}
 a.red_box .div2{position:relative;top:0;left:7.8rem;border-bottom: 1px dashed #eee;}
-a.red_box p.p3{font-size:0.95rem;color: #191919;letter-spacing: 1.2px;padding-top:0.6rem;height:2.2rem; line-height: 2.2rem;}
+a.red_box p.p3{font-size:0.95rem;color: #191919;letter-spacing: 1.2px;padding-top:0.6rem;height:2.2rem; line-height: 2.2rem;text-overflow: ellipsis;white-space: nowrap;}
 a.red_box p.p4{color: #C7C7C7;letter-spacing: 0.96px;font-size:0.7rem;padding-bottom:0.7rem;}
 .div3{height:1.5rem; line-height:1.5rem;text-align: center;color: #999999;font-size:0.85rem;}
 .label_div{position:absolute;right:-2rem;top:1rem;width:30%;color:#fff; background:#FC5638; text-align: center;padding:3px 0;font-size: 11px;
@@ -89,7 +90,7 @@ a.red_box p.p4{color: #C7C7C7;letter-spacing: 0.96px;font-size:0.7rem;padding-bo
     -webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);
     -o-transform: rotate(45deg);-ms-transform: rotate(45deg);
 }
-.label_icon{position: absolute;top:0;left:0; z-index:10;width:96%; height:5.2rem;}
+.label_icon{position: absolute;top:0;left:0; z-index:0;width:96%; height:5.2rem;}
 .label_icon.label_icon_guoqi{ background: url('../img/overdue_icon.png') right bottom no-repeat; background-size:5rem auto;}
 .label_icon.label_icon_yongwan{ background: url('../img/over_icon.png') right bottom no-repeat; background-size:5rem auto;}
 /*为空*/

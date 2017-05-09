@@ -1127,7 +1127,7 @@ CP.JCDG = (function() {
 			});
 			$('#jc_bs').KeyBoard({
 				val : '1',
-				max : 50000,
+				max : 99999,
 				min : 1,
 				num : 1,
 				tag : '倍',

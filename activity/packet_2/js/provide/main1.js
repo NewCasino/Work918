@@ -7,6 +7,6 @@ require.config({
 　　　　}
 　　});
 ***/
-require(["/activity/packet/js/jquery-1.9.1.min.js","/activity/packet/js/state.js"],function($_,aa){
+require(["/activity/packet_2/js/jquery-1.9.1.min.js","/activity/packet_2/js/state.js"],function($_,aa){
 	aa.init();
 })

@@ -281,18 +281,8 @@
         <div>确定</div>
     </div>
 </div>
-<script src="js/zepto.min.js"></script>
-<script>
-    $(function(){
-        $(".head_fixed li").click(function(){
-            $(this).addClass("cur").siblings("li").removeClass("cur");
-            var i=$(this).index();
-            $(".tab_content").eq(i).show().siblings(".tab_content").hide();
-        })
-        $(".number_ul li a").click(function(){
-            $(this).toggleClass("cur ball_scale");
-        })
-    })
-</script>
+<!-- <script src="js/zepto.min.js"></script> -->
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/yixing.js"></script>
 </body>
 </html>

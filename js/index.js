@@ -2297,12 +2297,14 @@ var TopAnch = function () {
 				//增添头部样式 
 				if(confTemp.style==true){
 					$dom.content.css({'background':'#f5f5f5','height':'2.5rem'});
+					$dom.title.removeClass('newUserhmHeader');
 					$dom.title.css({'font-size':'20px','color':'#000'});
 					$dom.btn_prev.css({'color':'#000','borderColor':'#ff624f','top':'1.2rem'});
 					$dom.btn_next.css({'color':'#000'});
 					$dom.content.css({'border-bottom':'1px solid #c7c7c7'});
 				}else if(confTemp.style==false){
 					$dom.content.css({'background':'','height':''});
+					$dom.title.removeClass('newUserhmHeader');
 					$dom.title.css({'font-size':'','color':''});
 					$dom.btn_prev.css({'color':'','border-color':'','top':''});
 					$dom.btn_next.css({'color':''});
@@ -2310,9 +2312,11 @@ var TopAnch = function () {
 				}else if(confTemp.style=='newuser'){
 					$dom.content.css({'background':'#f5f5f5','height':'2.5rem'});
 					$dom.title.css({'font-size':'18px','color':'#000'});
+					$dom.title.addClass('newUserhmHeader')
 					$dom.btn_prev.css({'color':'#000','borderColor':'#ff624f','top':'1.2rem'});
 					$dom.btn_next.css({'color':'#000'});
 					$dom.content.css({'border-bottom':'1px solid #c7c7c7'});
+					$dom.next.css({'color':'#fc5638'});
 				}
 				//控制头部的样式
 				

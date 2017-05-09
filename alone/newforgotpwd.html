@@ -7,8 +7,6 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>忘记密码</title>
-<script src='/js/public/jquery-1.9.1.min.js'></script>
-<script src='/js/public/JQ.md5.js'></script>
 <style type="text/css">
 
 /*msg弹窗*/
@@ -20,6 +18,17 @@
 .mask{background:#000;opacity:0.4;width:100%;height:150%;position:fixed;z-index:9999;left:0;top:0; display: none;}
 
 .weui-vcode-img{width:90px;height:40px;}
+.Mask{position: fixed;z-index:100;top:0;left:0;width:100%;height: 100%; background: rgba(0,0,0,0.7);}
+.pop{position:absolute; z-index:101;top:50%;left:50%;margin-top:-5rem; margin-left:-43%;width:86%;height:10rem;
+    background: #fff;border-radius: 10px;
+}
+.pop_body{ display: flex; align-items: center; flex-direction: column;justify-content: center;height: 7rem;width:100%;}
+.pop_body h1{ text-align: center; font-weight: normal;width:100%; color: #1a1a1a;font-size:1.1rem;}
+.pop_body p{ width:80%;margin:0 auto; line-height: 1.3rem;color:#555;font-size:0.9rem; text-align: center;padding-top:0.7rem;}
+.pop_btn{ position: absolute;bottom:0;left:0;width:100%;}
+.pop_btn a{display: block;height: 3rem; line-height: 3rem; text-align: center;color:#fc5638; text-decoration: none;font-size:1.1rem;}
+.pop_btn::after {content: " ";position: absolute;left: 0;top: 0;width: 100%;height: 1px;background-image: -webkit-linear-gradient(0deg, #e0e0e0 50%, transparent 50%);background-image: -moz-linear-gradient(0deg, #e0e0e0 50%, transparent 50%);background-image: -ms-linear-gradient(0deg, #e0e0e0 50%, transparent 50%);background-image: -o-linear-gradient(0deg, #e0e0e0 50%, transparent 50%);background-image: linear-gradient(0deg, #e0e0e0 50%, transparent 50%);}
+
 </style>
 <link rel="stylesheet" href="/style/weui.css"/>
 <link rel="stylesheet" href="/style/example.css"/>
@@ -72,6 +81,7 @@
           </div>
       </div>
     </div>
+    <div style='float:right;font-size:.85rem;color:#2395ff;margin:.5rem;' id='yym'>收不到短信？获取语音验证码</div>
     <div class="weui-btn-area">
       <button class="weui-btn weui-btn_disabled weui-btn_primary" disabled='true' id="btn_tj">下一步</button>
     </div>
@@ -102,7 +112,18 @@
     </div>
     </div>
   </section>
-  </article> 
+  </article>
+  <div class="Mask" style='display:none;'></div>
+  <div class="pop" style='display:none;'>
+      <div class="pop_body">
+          <p>请注意收听电话，以获取您的语音验证码，谢谢。</p>
+      </div>
+      <div class="pop_btn">
+          <a href="javascript:;">知道了</a>
+      </div>
+  </div>
+<script src='/js/public/jquery-1.9.1.min.js'></script>
+<script src='/js/public/JQ.md5.js'></script>
 <script>
 //公用弹出层和加载层
 var win_alert = alert;
@@ -125,6 +146,7 @@ var remove_alert = function () {
 	$('.alertBox').remove();
 	$('#mask').hide();
 };
+var clickLimit = true; // 限制点击
 
 
 $(function () {
@@ -145,24 +167,23 @@ $(function () {
 			return false;
 		}
 	});
+	$('.pop_btn a').bind('click', function(){
+		$('.Mask').hide();
+		$('.pop').hide();
+	})
 	$('#hyzm').click(function(){
-		mobile = $('#mobile').val().replace(/['\t]/g,'').replace(/\s*/g, '');
-		if($('#yzmpic').val()){
-			if($("#username").val() !="" && $("#username").length <= 32 ){
-				if(!(/^1[34578]\d{9}$/.test(mobile))){
-					alert("请输入有效手机号码");
-					return false;
-				}
-				checkUserForm();
-			}else{
-				alert('请输入有效用户名');
-				return false;
-			}
-		}else{
-			alert('请输入图形验证码');
-			return false;
+		if(clickLimit){
+			clickLimit = false;
+			yzmcheckout(true)
 		}
-		
+	})
+	$('#yym').click(function(){
+		if(clickLimit){
+			clickLimit = false;
+			if(!$('#yym').hasClass('yym')){
+				yzmcheckout(false)
+			}
+		}
 	})
 	
 	$(".weui-cell__ft").on("click",function(){
@@ -172,9 +193,31 @@ $(function () {
 		repwd();
 	})
 	
+	var yzmcheckout = function(bool){ //点击获取验证码 判断
+		mobile = $('#mobile').val().replace(/['\t]/g,'').replace(/\s*/g, '');
+		if($('#yzmpic').val()){
+			if($("#username").val() !="" && $("#username").length <= 32 ){
+				if(!(/^1[34578]\d{9}$/.test(mobile))){
+					alert("请输入有效手机号码");
+					clickLimit = true;
+					return false;
+				}
+				checkUserForm(bool);
+			}else{
+				alert('请输入有效用户名');
+				clickLimit = true;
+				return false;
+			}
+		}else{
+			clickLimit = true;
+			alert('请输入图形验证码');
+			return false;
+		}
+	}
+	
 	//获取验证码方法
 	var cont = 60;
-	var getyzmCode = function(){
+	var getyzmCode = function(bool){
 		mobile = $('#mobile').val().replace(/['\t]/g,'').replace(/\s*/g, '');
 		var imNo = mobile;
 		var stime = new Date().getTime();
@@ -184,6 +227,7 @@ $(function () {
 				newValue: 1,
 				flag: 1,
 				uid: $('#username').val(),
+				signtype: bool?'':'voice',
 				imNo: imNo,
 				stime: stime,
 				signmsg: $.md5("imNo="+imNo+'&timestamp='+stime+'&key='+'1.0^adhfjkas565a4sdf36a4s6df46^'),
@@ -194,15 +238,23 @@ $(function () {
 			type : "POST",
 			dataType : "xml",
 			data : get_yzm_data,
-			success : function(xml) {
+			success : function(xml){
 				var R = $(xml).find("Resp");
 				var code = R.attr("code");
 				var desc = R.attr("desc");
 				if (code == "0") {
+					clickLimit = false;
+					if(!bool){
+						$('.Mask').show();
+						$('.pop').show();
+						$('#yym').addClass('yym');
+					}
+					$('#yym').css({'color':'#999'});
 					var r = R.find("row");
 					var m = r.attr('mobileNo');
 					countDown()
 				}else{
+					clickLimit = true;
 					//$('.weui-cell__ft').find("img").attr("src","/img.jo?"+Math.random());
 					alert(desc);
 				}
@@ -235,7 +287,7 @@ $(function () {
 		});
 	}
 	//检查用户名是否存在
-	var checkUserForm = function(){
+	var checkUserForm = function(bool){
 		mobile = $('#mobile').val().replace(/['\t]/g,'').replace(/\s*/g, '');
 		if($('#username').val()){
 			var data ="uid=" + encodeURIComponent($("#username").val())+'&mobileNo='+mobile+'&mtype=4'+'&appversion=4.0.0'+'&source=3002';
@@ -249,8 +301,9 @@ $(function () {
 					var code = R.attr("code");
 					var desc = R.attr("desc");
 					if (code == '0') {//用户名存在
-						getyzmCode();
+						getyzmCode(bool);
 					}else{
+						clickLimit = true;
 						//$('.weui-cell__ft').find("img").attr("src","/img.jo?"+Math.random());
 						alert(desc);
 						return false
@@ -304,6 +357,11 @@ $(function () {
 			$("#hyzm").html("重新发送");
 			$('.weui-cell__ft').find("img").attr("src","/img.jo?"+Math.random())
 			wait = 60;
+			if($('#yym').hasClass('yym')){
+				$('#yym').removeClass('yym');
+			}
+			$('#yym').css({'color':'#2395ff'});
+			clickLimit = true;
 		}else{
 			$("#hyzm").attr("disabled", true);
 			$("#hyzm").html("重新发送(" + wait + ")");

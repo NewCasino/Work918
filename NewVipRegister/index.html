@@ -20,7 +20,7 @@
 </head>
 <body>
     <div style="margin:0 auto;width:0px;height:0px;overflow:hidden;">
-        <img src="img/sharelogo.png" style="position: absolute;z-index:;width: 400px;">
+        <img src="img/sharelogo.png" style="z-index:-1;width:400px; ">
     </div>
     <section class="wrapper">
         <div class="bg_img"><img src="img/logo.png" class="logo_img"></div>
@@ -40,7 +40,11 @@
             <div class="icon_4" >
                 <input type="text" maxlength="8" id="Usermsg" placeholder="验证码" />
             </div>
+            <div style='font-size:.85rem;color:#00b4ff;' id='yym'>
+            	<a style='position: relative;top:.3rem;float:right;'>收不到短信？获取语音验证码</a>
+            </div>
         </div>
+        
         <!--btn-->
         <a href="javascript:;" class="register_btn disabled_a">免费注册</a><!--不可点状态 disabled_a-->
         <!--文字-->
@@ -50,6 +54,15 @@
             <p><span>极速提款</span>中奖提款优先批复,快人一步</p>
         </div>
     </section>
+    <div class="Mask" style='display:none;'></div>
+  	<div class="pop" style='display:none;'>
+      <div class="pop_body">
+          <p>请注意收听电话，以获取您的语音验证码，谢谢。</p>
+      </div>
+      <div class="pop_btn">
+          <a href="javascript:;">知道了</a>
+      </div>
+  	</div>
     <script type="text/javascript" src='./js/jquery-1.9.1.min.js'></script>
     <script type="text/javascript" src='./js/md5.min.js'></script>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>

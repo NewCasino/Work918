@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>常见问题</title>
+    <title>帮助中心</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta name="format-detection" content="telephone=no" />
     <link rel="stylesheet" href="css/style.css">
+    <style>
+    	body>a{
+    		display: none;
+    	}
+    </style>
     <script>
         window.onload=function() {
             document.body.addEventListener('touchstart', function () {
@@ -13,6 +18,8 @@
         }
     </script>
 </head>
+<script src="https://s4.cnzz.com/z_stat.php?id=1261608320&web_id=1261608320" language="JavaScript"></script>
+
 <body>
     <!--常见问题--->
     <section class="wrapper">
@@ -54,6 +61,7 @@
         <!-- <script language="javascript" src="http://chat8.live800.com/live800/chatClient/textButton.js?jid=4543042755&companyID=152373&configID=127313&codeType=custom"></script>
 		<script id='write' language="javascript">function writehtml(){var temptext=text_generate();document.getElementById("live800iconlink").className="tel_a";document.getElementById('live127313').innerHTML=temptext;setTimeout('write.src',9000);}writehtml();</script> -->
     </div>
+    
     <script src="js/jquery-1.10.1.min.js"></script>
     <!-- <script src="js/swiper.min.js"></script> -->
     <script type="text/javascript">
@@ -68,6 +76,9 @@
 	    	}
 	    };
     	$(function(){
+    		try{ 
+    			_czc.push(['_trackEvent', '帮助中心', '移动端', '链接','1','点击次数']);
+    		}catch(e){}
     		var pagetitle = location.search.getParam("pagetitle")||"";
     		
 			var init = function(){

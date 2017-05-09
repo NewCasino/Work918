@@ -1850,7 +1850,7 @@ CP.JC = (function() {
 			});
 			$('#jc_bs').KeyBoard({
 				val : (lotteryType=="jczq"||lotteryType=="jclq")?"5":"1",
-				max : 50000,
+				max : 99999,
 				min : 1,
 				num : 1,
 				tag : '倍',

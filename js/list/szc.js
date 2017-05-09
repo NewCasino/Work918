@@ -585,7 +585,7 @@ CP.SZC = (function(){
 		});
 		$dom.$tboxQishu.KeyBoard({
 			val : zuiqishuNum,
-			max : 154,
+			max : 10,
 			min : 1,
 			num : 1,
 			tag : '期',

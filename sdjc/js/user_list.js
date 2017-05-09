@@ -48,6 +48,7 @@ SDJC.userList=(function(){
 							age.buymoney = $(this).attr('buymoney');
 							age.addtime = $(this).attr('addtime');
 							age.imgUrl = $(this).attr('imgUrl');
+							age.bonus = $(this).attr('bonus');
 							html += '<li class=line_gray ftype='+age.uid+'>'
 							if(age.imgUrl){
 								html += '<div class=div1><img src='+age.imgUrl+'>'
@@ -55,7 +56,7 @@ SDJC.userList=(function(){
 								html += '<div class=div1><img src=img/zwtp.png>'
 							}
 							html += '<span>'+age.uid+'</span></div>'
-							html += '<div class=div2>'+age.buymoney+'元</div><div class='+(age.finish>0?"red":"div3")+'>'+(age.finish>0?(age.buymoney+'元'):age.addtime)+'</div>'
+							html += '<div class=div2>'+age.buymoney+'元</div><div class='+(age.finish>0?"red":"div3")+'>'+(age.finish>0?(age.bonus+'元'):age.addtime)+'</div>'
 							html += '</li>'
 						})
 						$('#line_user').html(html);
